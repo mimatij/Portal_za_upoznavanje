@@ -22,8 +22,10 @@ if(isset($_POST['prezime']) && $_POST['prezime'] !== "")
 
 if(isset($_POST['spol']) && $_POST['spol'] !== "")
 {
-  //$spol
-  //kako value radiobotuna u php-u dohvatit?
+  $spol = $_POST['spol'];
+  $_SESSION['spol'] = $spol;
+  $sql = "UPDATE Korisnik SET spol='". $spol ."' WHERE email='$email'";
+  $insert = $mysqli->query($sql);
 }
 
 if(isset($_POST['grad']) && $_POST['grad'] !== "")

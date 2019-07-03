@@ -19,6 +19,7 @@ $grad = $korisnik['grad'];
 
 $_SESSION['ime'] = $ime;
 $_SESSION['prezime'] = $prezime;
+$_SESSION['spol'] = $spol;
 $_SESSION['grad'] = $grad;
 
 if(isset($_POST['btn_uredi'])) header('location: interests.php');
@@ -35,9 +36,16 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
      <figure>
        slika
      </figure>
-     <form class="" action="profile.php" method="post">
+     <form action="profile.php" method="post">
        Hello, <?php echo $_SESSION['ime']; ?>
-       <h3>SLIKA ne zaboravit</h3>
+       <h3>SLIKA ne zaboravit
+       ne znam je li dobra ideja spremat sliku u tablicu Korisnik, di
+     su i svi osobni podaci. Mislim da je okej, ali triba malo istražit *samo ideja</h3>
+     <br>
+     <h3>Chat - bi li tribalo spremat te poruke? Kao imat neki history?
+     Ako da, onda nam i za to triba nekakva tablica - možda za svaki razgovor kreirat
+     novu tablicu i spremat poruke po redu - po slanju i onda ih samo izlistat.
+     Triba pamtit i email onog koji je posalo poruku. *samo ideja</h3>
        Osnovni podaci:<br>
        Ime: <?php echo "$ime" . ', ' . "$prezime"; ?>
        <br>

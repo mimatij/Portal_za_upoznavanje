@@ -32,17 +32,35 @@ if(isset($_POST['btn_opis_korisnika']))
         Osobni podaci:
         Ime: <input type="text" name="ime" value="" placeholder="<?php echo $_SESSION['ime']; ?>"><br>
         Prezime: <input type="text" name="prezime" value="" placeholder="<?php echo $_SESSION['prezime']; ?>"><br>
-        <?php  ?>
         Spol:
-        <input type="radio" name="spol" value="Z"> Muškarac
-        <input type="radio" name="spol" value="M"> Žena
+        <?php
+          if(isset($_SESSION['spol']) && $_SESSION['spol'] === "M")
+          {
+            echo '<input type="radio" name="spol" value="M" checked="checked"> Muškarac';
+            echo '<input type="radio" name="spol" value="Z"> Žena';
+          }
+          elseif ($_SESSION['spol'] === "Z")
+          {
+            echo '<input type="radio" name="spol" value="M"> Muškarac';
+            echo '<input type="radio" name="spol" value="Z" checked="cheched"> Žena';
+          }
+          else
+          {
+            echo '<input type="radio" name="spol" value="M"> Muškarac';
+            echo '<input type="radio" name="spol" value="Z"> Žena';
+          }
+        ?>
         <br>
         Grad: <input type="text" name="grad" value="" placeholder="<?php echo $_SESSION['grad']; ?>"><br>
         <button type="submit" name="btn_osobni_podaci">Spremi promjene</button>
       </form>
       <br><br>
+
+
       <form action="interests.php" method="post">
         Osobni interesi:
+        <h3>Ovdje mi nastaju problemi - ne mogu nikako sebi
+        lipo u glavi posložit ideju tih tablica i veze</h3>
         <br>Spol koji tražite:
         <br><input type="radio" name="trazim_spol" value="M">muški
         <br><input type="radio" name="trazim_spol" value="Z">ženski
@@ -59,6 +77,7 @@ if(isset($_POST['btn_opis_korisnika']))
         <button type="submit" name="btn_opis_korisnika">Spremi opis</button>
       </form>
 
+      <br><br>
       <form action="interests.php" method="post">
         <button type="submit" name="btn_sto_korisnik_trazi">Spremi</button>
       </form>

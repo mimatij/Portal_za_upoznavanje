@@ -1,18 +1,14 @@
 <?php
 session_start();
-//baza uključit
-//triba li ovdje?
 require '../database/db.php';
 
 if(isset($_POST['btn_ok_registration']))
 {
-  //echo 'eto';
   if(isset($_POST['email']) && isset($_POST['password_1']) && isset($_POST['password_2'])
     && $_POST['email'] !== "" && $_POST['password_1'] !== "" && $_POST['password_2'] !== "")
   {
     if($_POST['password_1'] === $_POST['password_2'])
     {
-      //echo 'moze';
       require 'check_registration.php';
     }
     else
@@ -23,11 +19,9 @@ if(isset($_POST['btn_ok_registration']))
   }
   else
   {
-    //echo 'nije';
     $_SESSION['message'] = 'Unesite podatke u sva polja.';
     header('location: errors.php');
   }
-
 }
  ?>
 
