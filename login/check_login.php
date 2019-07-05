@@ -9,9 +9,9 @@ $rezultat = $mysqli->query("SELECT * FROM Korisnik WHERE email='$email'");
 
 //ako je dohvaćeno 0 redaka iz tablice u bazi -> nema korisnika
 //inače: dohvaćen je jedan, treba vidjeti je li lozinka ispravna
-if($rezultat->num_rows == 0)
+if($rezultat->num_rows === 0)
 {
-  $_SESSION['message'] = "Nepostojeći korisnik";
+  $_SESSION['message'] = "Nepostojeći korisnik.";
   header('location: errors.php');
 }
 else
@@ -33,11 +33,12 @@ else
 
     //varijabla za Login
     $_SESSION['ulogiran'] = true;
+    $_SESSION['registriran'] = false;
     header('location: profile.php');
   }
   else
   {
-    $_SESSION['message'] = 'Pogresna lozinka, pokusajte ponovo';
+    $_SESSION['message'] = 'Pogrešna lozinka, pokušajte ponovno.';
     header('location: errors.php');
   }
 }

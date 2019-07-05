@@ -1,0 +1,195 @@
+html, body{
+    /* background-color: #FF895A; */
+    /* background: -webkit-linear-gradient(to top left, #8A2387,#E94057,#F27121, white); */
+    /* background-image: linear-gradient(to top left, #8A2387,#E94057,#F27121, white); */
+    background-image: linear-gradient(to right, #12c2e9,#c471ed,#f64f59);
+    /* background-image: linear-gradient(to right, #FC466B,#3F5EFB); */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #4FD0FF;
+    margin: 0;
+    font-family: 'Raleway', Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+* {box-sizing: border-box;}
+
+.logo_div{
+    background-color: rgba(224, 208, 236, 0.5);
+    min-width: 100%;
+    content: "";
+    min-height: 90px;
+    display: inline-block;
+    box-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+.logo_image{
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 200px;
+    border-radius: 15px;
+    display: inline-block;
+    float: left;
+}
+
+.login_image{
+    position: absolute;
+    left: 80%;
+    top: 3px;
+}
+
+.btn_login{
+    display: inline-block;
+    box-shadow: 4px 4px 3px rgba(0,0,0,0.5);
+    background: #8ad6cc;
+    background-image: linear-gradient(to right, #f03441,#f3323f);
+    position: relative;
+    height: 50px;
+    width: 100px;
+    border: none;
+    border-radius: 4px;
+    color: rgb(15, 3, 34);
+    font: 400 130px/0.8 'Cookie', Helvetica, sans-serif;
+    font-size: 2em;
+    text-shadow: 4px 4px 3px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: 800ms ease all;
+    outline: none;
+
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 35px;
+    margin-right: 40px;
+    float: right;
+}
+
+.left{
+    -webkit-transition: 300ms ease all;
+    -moz-transition: 300ms ease all;
+    -o-transition: 300ms ease all;
+    transition: 300ms ease all;
+    background-size:contain;
+    background-repeat: no-repeat;
+    box-shadow: -4px 4px 5px 9px rgba(0,0,0,0.5);
+    
+    display: inline-block;
+    width: 39%;
+    height: 300px;
+    float: left;
+    margin-left: 50px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+.right{
+    margin-top: 20px;
+    background: url(register_image.png) no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    width: 40%;
+    text-align: center;
+    padding: 130px 0px;
+    margin-top: 90px;
+
+    display: inline-block;
+    float: left;
+}
+
+.btn_register{
+    display: inline-block;
+    box-shadow: 4px 4px 3px rgba(0,0,0,0.5);
+    background: #8ad6cc;
+    background-image: linear-gradient(to right, #8bf5e7,#b7f8ef);
+    position:relative;
+    height:60px;
+    width:200px;
+    border:none;
+    border-radius: 4px;
+    color:rgb(105, 18, 245);
+    font: 400 130px/0.8 'Cookie', Helvetica, sans-serif;
+    font-size:2em;
+    text-shadow: 4px 4px 3px rgba(0,0,0,0.2);
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+
+    margin-right: 110px;
+}
+
+.btn_login:hover, .btn_register:hover{
+    background:#66beb2;
+    color:#fff;
+    text-shadow: 4px 4px 3px rgba(247, 243, 243, 0.2);
+}
+
+.btn_login:before, .btn_register:before, .btn_login:after, .btn_register:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:4px;
+    width:0;
+    background-image: linear-gradient(to right, #FF895A,pink);
+    transition:400ms ease all;
+}
+
+.btn_login:after, .btn_register:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.btn_login:hover:before, .btn_register:hover:before, .btn_login:hover:after, .btn_register:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+footer{
+    display: flex;
+    background-color: rgb(0,0,0,0.7);
+    color: #F1DDCF;
+    padding-bottom: 1%;
+    width: 100%;
+    font-family: "Lucida Console", Times, sans-serif;
+    font-size: 1em;
+}
+  
+.footerContainer{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 800px;
+}
+  
+.footerBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+  
+.footerItem {
+    flex: 1;
+    margin: 0 16px;
+    text-align: center;
+}
+  
+.footerSredina{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 80%;
+}
+  
+.footerLinks{
+      text-decoration: none;
+      color: #F1DDCF;
+}
+
+.sredina{
+      margin-top: 30px;
+      padding-bottom: 14px;
+}
+  
