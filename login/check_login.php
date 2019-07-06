@@ -2,7 +2,7 @@
 if(!isset($_SESSION)) { 
   session_start(); 
 }
-require '../database/db.php';
+include_once( '../database/db.php');
 
 //dohvacamo unešeni email i tražimo ga u bazi
 //email je jedinstven!

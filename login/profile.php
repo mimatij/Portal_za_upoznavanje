@@ -2,7 +2,7 @@
 if(!isset($_SESSION)) { 
     session_start(); 
 }
-require '../database/db.php';
+include_once('../database/db.php');
 
 // echo '<pre>';
 // //echo '$_SERVER = '; print_r($_SERVER);
@@ -13,12 +13,13 @@ require '../database/db.php';
 $email = $_SESSION['email'];
 $sql = "SELECT id FROM Korisnik where email='$email'";
 $id = $mysqli->query($sql)->fetch_object()->id;
-$rezultat = $mysqli->query("SELECT ime, prezime, spol, grad FROM Korisnik WHERE email='$email'");
+$rezultat = $mysqli->query("SELECT ime, prezime, spol, grad, trazim FROM Korisnik WHERE email='$email'");
 $korisnik = $rezultat->fetch_assoc();
 
 $ime = $korisnik['ime'];
 $prezime = $korisnik['prezime'];
 $spol = $korisnik['spol'];
+$trazim = $korisnik['trazim'];
 $grad = $korisnik['grad'];
 
 $_SESSION['ime'] = $ime;
@@ -91,10 +92,10 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                 </div>
             </form>
 
-            
+            Interesi:
             <?php 
                
-                /*
+                
                 $upit = "SELECT naziv FROM nudim_interese WHERE id = $id";
                 $rezultat = $mysqli->query($upit);
                 $retci = rezultat_u_array($rezultat);
@@ -103,7 +104,7 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                         echo $value2.", ";
                     }
                 }
-                */
+                
 
                 //SELECT id FROM Korisnik WHERE NOT(id = $id); svi idevi
                 //SELECT naziv FROM nudim_interese where id = 48;
@@ -114,13 +115,25 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                 function spoji(){
                     global $id;
                     global $mysqli;
-                    $upit = "SELECT id FROM Korisnik WHERE NOT(id = $id)";
+                    global $spol;
+                    $jesam = 0;
+                    if($spol === 'M')
+                        $jesam = 1;
+                    if($spol === 'Z')
+                        $jesam = 2;
+                    global $trazim;
+                    $upit = "SELECT id, spol, trazim FROM Korisnik WHERE NOT(id = $id)";
                     $rezultat = $mysqli->query($upit);
                     $retci = rezultat_u_array($rezultat);
                     $max_zbroj = 0;
                     $max_id = 0;
-                    foreach ($retci as $key => $value) {                        
+                    foreach ($retci as $key => $value) {
+                                                
                         if($value['id'] == $id)
+                            continue;
+                        if($jesam === 1 && $value['trazim'] == 2 || $jesam === 2 && $value['trazim'] == 1)
+                            continue;
+                        if($trazim == 1 && $value['spol'] === 'Z' || $trazim ==2 && $value['spol'] ==='M')
                             continue;
                         $id2 = $value['id'];
                         $upit = "SELECT COUNT(trazim_interese.naziv) AS a FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id AND nudim_interese.id=$id2";
@@ -137,6 +150,9 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
 
                     return $max_id;
                 }
+
+                echo "<br> Najkompatibilniji profil (samo id):";
+                echo spoji();
             ?>
             
 

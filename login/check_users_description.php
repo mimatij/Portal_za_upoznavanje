@@ -2,7 +2,7 @@
 if(!isset($_SESSION)) { 
   session_start(); 
 }
-require '../database/db.php';
+include_once ('../database/db.php');
 $email = $_SESSION['email'];
 
 
@@ -35,8 +35,24 @@ ubaci_u_bazu('odnos', 'nudim_interese', $mysqli, $id);
 ubaci_u_bazu('hobiji', 'nudim_interese', $mysqli, $id);
 ubaci_u_bazu('odnos2', 'trazim_interese', $mysqli, $id);
 ubaci_u_bazu('hobiji2', 'trazim_interese', $mysqli, $id);
-ubaci_u_bazu('trazim_spol', 'trazim_interese', $mysqli, $id);
+ubaci_u_bazu('trazim_spol', 'trazim', $mysqli, $id);
 
+if(isset($_POST['trazim_spol'])){
+  $polje = $_POST['trazim_spol'];
+  $x=0;
+  foreach($polje as $vrijednost){
+    if($x >0)
+      $x = 3;
+    if($vrijednost === 'M' && $x === 0)
+      $x = 1;
+    if($vrijednost === 'Z' && $x === 0)
+      $x = 2;
+    
+  }
+
+  $sql = "UPDATE Korisnik SET trazim = $x WHERE id = $id";
+  $update = $mysqli->query($sql);
+}
  ?>
 
 

@@ -2,11 +2,11 @@
 if(!isset($_SESSION)) { 
     session_start(); 
 }
-require '../database/db.php';
+include_once( '../database/db.php');
 
 if(isset($_POST['btn_ok_login']))
 {
-    require 'check_login.php';
+    include_once('check_login.php');
 }
 ?>
 

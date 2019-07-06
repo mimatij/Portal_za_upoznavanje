@@ -1,6 +1,6 @@
 <?php
 //spajanje na bazu
-require '../database/db.php';
+include_once( '../database/db.php');
 
 if(!isset($_SESSION)) { 
   session_start(); 

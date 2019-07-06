@@ -1,6 +1,6 @@
 <?php
 //session?
-require '../database/db.php';
+include_once( '../database/db.php');
 $_SESSION['email'] = $_POST['email'];
 
 //password_1 ili password_2 - svejedno je

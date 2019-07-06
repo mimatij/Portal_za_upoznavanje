@@ -4,6 +4,7 @@ $user = 'student';
 $pass = 'pass.mysql';
 $db = 'udovicic';
 $mysqli = new mysqli($host,$user,$pass,$db) or die($mysqli->error);
+$mysqli->set_charset("utf8");
 
 if (!function_exists('rezultat_u_array')) {
     function rezultat_u_array($rezultat_upita) {

@@ -4,7 +4,7 @@ if(!isset($_SESSION)) {
 }
 //baza uključit
 //triba li ovdje?
-require '../database/db.php';
+include_once( '../database/db.php');
 
 if(isset($_POST['btn_ok_registration']))
 {
@@ -15,7 +15,7 @@ if(isset($_POST['btn_ok_registration']))
     if($_POST['password_1'] === $_POST['password_2'])
     {
       //echo 'moze';
-      require 'check_registration.php';
+      include_once('check_registration.php');
     }
     else
     {
