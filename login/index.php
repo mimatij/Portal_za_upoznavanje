@@ -2,7 +2,9 @@
 //spajanje na bazu
 require '../database/db.php';
 
-session_start();
+if(!isset($_SESSION)) { 
+  session_start(); 
+}
 // echo '<pre>';
 // //echo '$_SERVER = '; print_r($_SERVER);
 // echo '$_POST = '; print_r($_POST);

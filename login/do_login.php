@@ -1,5 +1,7 @@
 <?php
-session_start();
+if(!isset($_SESSION)) { 
+    session_start(); 
+}
 require '../database/db.php';
 
 if(isset($_POST['btn_ok_login']))

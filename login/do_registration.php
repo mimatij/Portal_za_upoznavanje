@@ -1,5 +1,7 @@
 <?php
-session_start();
+if(!isset($_SESSION)) { 
+  session_start(); 
+}
 //baza uključit
 //triba li ovdje?
 require '../database/db.php';
