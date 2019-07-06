@@ -4,6 +4,10 @@ if(!isset($_SESSION)) {
 }
 require '../database/db.php';
 
+$email = $_SESSION['email'];
+$sql = "SELECT id FROM Korisnik where email='$email'";
+$id = $mysqli->query($sql)->fetch_object()->id;
+
 if(isset($_POST['btn_osobni_podaci']))
   require 'check_personal_data.php';
 
@@ -59,10 +63,8 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
           <br>
           <?php
             function provjeri_zadanost($atribut, $tablica){
-              require '../database/db.php';
-              $email = $_SESSION['email'];
-              $sql = "SELECT id FROM Korisnik where email='$email'";
-              $id = $mysqli->query($sql)->fetch_object()->id;
+              global $mysqli;
+              global $id;
               $sql = "SELECT COUNT(*) AS br_zadanih FROM $tablica WHERE id = $id AND naziv = '$atribut'";
               if($mysqli->query($sql)->fetch_object()->br_zadanih == 1)
                 echo " checked=checked";

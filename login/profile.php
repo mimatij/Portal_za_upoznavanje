@@ -11,6 +11,8 @@ require '../database/db.php';
 // echo '<pre>';
 
 $email = $_SESSION['email'];
+$sql = "SELECT id FROM Korisnik where email='$email'";
+$id = $mysqli->query($sql)->fetch_object()->id;
 $rezultat = $mysqli->query("SELECT ime, prezime, spol, grad FROM Korisnik WHERE email='$email'");
 $korisnik = $rezultat->fetch_assoc();
 
@@ -88,6 +90,55 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                     <!-- <button type="submit" name="btn_uredi">Uredi</button> **ovo ne treba vise jer u izborniku postoji mogucnost "uredi profil" -->
                 </div>
             </form>
+
+            
+            <?php 
+               
+                /*
+                $upit = "SELECT naziv FROM nudim_interese WHERE id = $id";
+                $rezultat = $mysqli->query($upit);
+                $retci = rezultat_u_array($rezultat);
+                foreach ($retci as $key => $value) {
+                    foreach ($value as $key => $value2) {
+                        echo $value2.", ";
+                    }
+                }
+                */
+
+                //SELECT id FROM Korisnik WHERE NOT(id = $id); svi idevi
+                //SELECT naziv FROM nudim_interese where id = 48;
+               // SELECT naziv FROM trazim where id = 48;/
+
+               
+               //SELECT trazim_interese.naziv FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=48 AND nudim_interese.id=55;
+                function spoji(){
+                    global $id;
+                    global $mysqli;
+                    $upit = "SELECT id FROM Korisnik WHERE NOT(id = $id)";
+                    $rezultat = $mysqli->query($upit);
+                    $retci = rezultat_u_array($rezultat);
+                    $max_zbroj = 0;
+                    $max_id = 0;
+                    foreach ($retci as $key => $value) {                        
+                        if($value['id'] == $id)
+                            continue;
+                        $id2 = $value['id'];
+                        $upit = "SELECT COUNT(trazim_interese.naziv) AS a FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id AND nudim_interese.id=$id2";
+                        $a = $mysqli->query($upit)->fetch_object()->a;    
+                        $upit = "SELECT COUNT(trazim_interese.naziv) AS b FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id2 AND nudim_interese.id=$id";
+                        $b = $mysqli->query($upit)->fetch_object()->b;
+                        if($a+$b > $max_zbroj){
+                            $max_id = $value['id'];
+                            $max_zbroj = $a + $b;
+                        }                         
+                    }
+                    $upit = "INSERT INTO spojeni  VALUES ($id,$max_id)";
+                    $rezultat = $mysqli->query($upit);
+
+                    return $max_id;
+                }
+            ?>
+            
 
         <!-- </div> -->
 
