@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Upoznaj me! - upitnik</title>
+    <!-- tu san dvi stvari izbrisala,pa mia mos unit kako bi tila da izgleda chat-->
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- "http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext" -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+
+    <div class="logoAndNavbar">
+            <a href="../login/profile.php"><img src="../login/logo.png" title="upoznajme" class="logo_image" /></a>
+
+        <div class="navbar">
+            <ul class="nav">
+                <li><a href="../login/profile.php" data-hover="Profil">Profil</a></li>
+                <li><a href="../chat/chat.html" data-hover="Chat">Chat</a></li>
+                <li class="active"><a href="../login/interests.php" data-hover="Uredi profil">Uredi profil</a></li>
+                <li><a href="../login/logout.php" data-hover="Logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <br>
+
+    <h1 id="naslov"></h1>
+    <div id="chat"></div>
+    <br />
+    <input type="text" id="txt"><button id="btn">Pošalji</button>
+    <br>
+    <button id="btn_kraj">Kraj</button>
+
+    <script>
+    //Na pocetku moramo ono napravit popis dosadasnjih poruka
+    var ime1,ime2;
+    var to_email,from_email;
+    
+    var flag=true;
+    var vrijemeZadnjegPristupa=0;
+    var interval;
+
+    $(document).ready(function(){
+        //prvo trebamo saznat tko je sad ulogiran i tko salje poruku
+        $.ajax(
+        {
+            url: "Who.php",
+            type: "GET",
+            data:
+            {},
+            dataType: "json",
+            success: function(data){
+                ime1=data.ime1;
+                from_email=data.email1;
+                ime2=data.ime2;
+               // prezime2=data.prezime2;
+                to_email=data.email2;
+
+                console.log("Ovo je nas korisnik:"+ime1 +" email:");
+            
+                $( "#naslov" ).html( "Korisnik: " + ime1 );
+
+                  cekajPoruku();
+                  $( "#btn" ).on( "click", posaljiPoruku );
+                  
+                  $("#btn_kraj").on("click",function(){
+                      console.log("Kliknuo sam na kraj,i zelim kraj!!!");
+                    flag=false;
+                    console.log("flag jeee:  "+flag);
+                });
+                
+
+            },
+            error: function( xhr, status )
+            {
+              if(status !== null) console.log("nije ok");
+            }
+        });
+
+    });
+
+
+    function cekajPoruku()
+    {
+        //console.log( "cekajPoruku" );
+        console.log("Cekaj poruku from_email:"+from_email+"  to_email:" + to_email);;
+        if(flag===false){
+            console.log("Pokusavam zatvorit interval");
+            clearTimeout(interval);
+        }
+        else{
+        $.ajax(
+        {
+            url: "chat_cekajPoruku.php",
+            type: "GET",
+            data:
+            {
+                from: from_email,
+                to: to_email,
+                vrijemeZadnjegPristupa: vrijemeZadnjegPristupa
+            },
+            success: function(data)
+            {
+                console.log( "ucitajTekst :: success :: data = " + JSON.stringify( data ) );
+                if( typeof( data.error ) === "undefined" )
+			    {
+                    if(typeof(data.prazno) === "undefined"){
+                        crtajTekst( data );
+
+                        vrijemeZadnjegPristupa=data.vrijemeZadnjegPristupa;
+                        console.log("Vrijeme zadnjeg pistupa: "+vrijemeZadnjegPristupa);
+
+                        interval=setTimeout(function(){
+                            cekajPoruku();
+                            },3000); 
+                    }
+
+                    else{
+                        interval=setTimeout(function(){
+                                    cekajPoruku();
+                                    },3000); 
+                    }
+                    
+                    
+			    }
+            },
+            error: function( xhr, status )
+		    {
+                console.log( "ucitajTekst :: error :: status = " + status );
+
+                if( status === "timeout" )
+                    cekajPoruku();
+		    }
+
+      });  }  
+    }
+
+    function posaljiPoruku()
+    {
+        console.log("Posalji poruku");
+
+        $.ajax(
+        {
+            url: "chat_posaljiPoruku.php",
+            type: "GET",
+            data:
+            {
+                from_email: from_email,
+                to_email: to_email,
+                poruka: encodeURI( $( "#txt" ).val() )
+            },
+            dataType: "json",
+            success: function( data )
+            {
+            console.log( "posaljiPoruku :: success :: data = " + JSON.stringify( data ) );
+            },
+            error: function( xhr, status )
+            {
+            if( status !== null )
+                console.log( "posaljiPoruku :: greška pri slanju poruke (" + status + ")" );
+            }
+        });
+        // Obriši sadržaj text-boxa.
+       $( "#txt" ).val( "" );
+       cekajPoruku();
+  }
+
+    function crtajTekst(data)
+    {
+        var tbl=$("<table></table>");
+        for(var i=0; i < data.poruke.length;++i){
+            var tr=$("<tr></tr>");
+            var td_ime=$("<td></td>");
+            td_ime.css({"font-weight":"bold"});
+            if(data.poruke[i].from === from_email)
+                td_ime.html(""+ime1+": ");
+            else
+                td_ime.html(""+ime2+": ");
+            var td_msg=$("<td></td>").html(" "+data.poruke[i].msg);
+
+            tr.append(td_ime).append(td_msg);
+            tbl.append(tr);
+        }
+
+        $("#chat").html(tbl);
+    }
+
+    </script>
+</body>
+</html>

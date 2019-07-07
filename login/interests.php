@@ -1,6 +1,6 @@
 <?php
-if(!isset($_SESSION)) { 
-    session_start(); 
+if(!isset($_SESSION)) {
+    session_start();
 }
 include_once( '../database/db.php');
 
@@ -40,7 +40,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
             <div class="navbar">
                 <ul class="nav">
                     <li><a href="profile.php" data-hover="Profil">Profil</a></li>
-                    <li><a href="chat.php" data-hover="Chat">Chat</a></li>
+                    <li><a href="../chat/messanger.php" data-hover="Chat">Chat</a></li>
                     <li class="active"><a href="interests.php" data-hover="Uredi profil">Uredi profil</a></li>
                     <li><a href="logout.php" data-hover="Logout">Logout</a></li>
                 </ul>
@@ -62,7 +62,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
               echo '<p class="container_success">Izmijenite podatke i spremite promjene.</p>';
             }
           ?>
-      
+
           <br>
           <?php
             function provjeri_zadanost($atribut, $tablica){
@@ -71,7 +71,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
               $sql = "SELECT COUNT(*) AS br_zadanih FROM $tablica WHERE id = $id AND naziv = '$atribut'";
               if($mysqli->query($sql)->fetch_object()->br_zadanih == 1)
                 echo " checked=checked";
-              
+
             }
 
             function provjeri_zadanost_spola($atribut){
@@ -83,7 +83,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                 echo "checked=checked";
               if($a == 1 && $atribut == 'M' || $a == 2 && $atribut == 'Z')
                 echo "checked=checked";
-              
+
             }
           ?>
 
@@ -194,7 +194,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                 </form>
                 </div>
               </td>
-              
+    
               <td>
                 <div class="container_right">
                 <form action="interests.php" method="post">

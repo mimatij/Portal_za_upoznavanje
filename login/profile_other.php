@@ -41,7 +41,7 @@ $email = $korisnik['email'];
             <div class="navbar">
                 <ul class="nav">
                     <li class="active"><a href="profile.php" data-hover="Profil">Profil</a></li>
-                    <li><a href="chat.php" data-hover="Chat">Chat</a></li>
+                    <li><a href="../chat/chat.html" data-hover="Chat">Chat</a></li>
                     <li><a href="interests.php" data-hover="Uredi profil">Uredi profil</a></li>
                     <li><a href="logout.php" data-hover="Logout">Logout</a></li>
                 </ul>
@@ -57,7 +57,7 @@ $email = $korisnik['email'];
         <!-- <div class="personal_card"> -->
             <img class="user_image" src="korisnik.jpg" title="user_image"/>
 
-            <form action="chat.php">
+            <form action="../chat/chat.html">
             <button type="submit" name="chat">Pošalji poruku!</button>
             </form>        
 

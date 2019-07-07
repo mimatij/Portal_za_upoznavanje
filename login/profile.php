@@ -53,7 +53,7 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
             <div class="navbar">
                 <ul class="nav">
                     <li class="active"><a href="profile.php" data-hover="Profil">Profil</a></li>
-                    <li><a href="chat.php" data-hover="Chat">Chat</a></li>
+                    <li><a href="../chat/chat.html" data-hover="Chat">Chat</a></li>
                     <li><a href="interests.php" data-hover="Uredi profil">Uredi profil</a></li>
                     <li><a href="logout.php" data-hover="Logout">Logout</a></li>
                 </ul>
