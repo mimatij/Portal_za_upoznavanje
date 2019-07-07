@@ -26,6 +26,9 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
         <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+        <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"> -->
+        <!-- <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script> -->
         <!-- "http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext" -->
     </head>
 
@@ -121,6 +124,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                     <br><br>
                     Grad: <br><input type="text" name="grad" value="" placeholder="<?php echo $_SESSION['grad']; ?>"><br><br><br>
                     <button type="submit" name="btn_osobni_podaci">Spremi promjene</button>
+		Lociraj me: <br><button id="btn_geolokacija">Gdje sam?</button><br><br>
                 </form>
                 </div>
               </td>
@@ -262,7 +266,41 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
           </table>
 
           
-          
+          <script>    
+$( document ).ready( function() 
+{
+    $( "#btn_geolokacija" ).on( "click", locate );
+} );
+
+
+function locate() 
+{
+    navigator.geolocation.getCurrentPosition( function( pos ) 
+    {
+        var sir = Number(pos.coords.latitude);
+        var duz = Number(pos.coords.longitude);
+
+        $.ajax(
+        {
+            url: "geolocation.php",
+            data:
+            {
+                sirina: sir,
+                duzina: duz
+            },
+            success: function( data )
+            {
+            },
+            error: function( xhr, status )
+            {
+                if( status !== null )
+                    console.log( "Greška prilikom Ajax poziva: " + status );
+            }
+        } );
+    } );
+}    
+</script>
+
 
           
 
