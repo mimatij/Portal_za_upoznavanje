@@ -37,5 +37,6 @@ if(isset($_POST['grad']) && $_POST['grad'] !== "")
   $insert = $mysqli->query($sql);
 }
 
-header('location: profile.php');
+
+header('location: interests.php');
  ?>
