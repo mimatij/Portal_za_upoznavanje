@@ -1,19 +1,12 @@
 <?php
+
 if(!isset($_SESSION)) { 
     session_start(); 
 }
 include_once('../database/db.php');
+$id = $_SESSION['partner'];
 
-// echo '<pre>';
-// //echo '$_SERVER = '; print_r($_SERVER);
-// echo '$_POST = '; print_r($_POST);
-// echo '$_SESSION = '; print_r($_SESSION);
-// echo '<pre>';
-
-$email = $_SESSION['email'];
-$sql = "SELECT id FROM Korisnik where email='$email'";
-$id = $mysqli->query($sql)->fetch_object()->id;
-$rezultat = $mysqli->query("SELECT ime, prezime, spol, grad, trazim FROM Korisnik WHERE email='$email'");
+$rezultat = $mysqli->query("SELECT ime, prezime, spol, grad, trazim, email FROM Korisnik WHERE id='$id'");
 $korisnik = $rezultat->fetch_assoc();
 
 $ime = $korisnik['ime'];
@@ -21,13 +14,8 @@ $prezime = $korisnik['prezime'];
 $spol = $korisnik['spol'];
 $trazim = $korisnik['trazim'];
 $grad = $korisnik['grad'];
+$email = $korisnik['email'];
 
-$_SESSION['ime'] = $ime;
-$_SESSION['prezime'] = $prezime;
-$_SESSION['spol'] = $spol;
-$_SESSION['grad'] = $grad;
-
-if(isset($_POST['btn_uredi'])) header('location: interests.php');
 ?>
 
 <!DOCTYPE html>
@@ -59,10 +47,15 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
         <br>
 
 
-        <p class="pozdrav">Hello, <?php echo " " . $_SESSION['ime'] . "!"; ?></p>
+        
+        <p class="pozdrav">Bok <?php echo " " . $_SESSION['ime'] . ", ovo je profil tvog kompatibilnog partnera!"; ?></p>
 
         <!-- <div class="personal_card"> -->
-            <img class="user_image" src="korisnik.jpg" title="user_image"/>        
+            <img class="user_image" src="korisnik.jpg" title="user_image"/>
+
+            <form action="chat.php">
+            <button type="submit" name="chat">Pošalji poruku!</button>
+            </form>        
 
             <!-- **treba li form ovdje uopce? -->
             <form class="" action="profile.php" method="post"> 
@@ -112,62 +105,9 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
 
                
                //SELECT trazim_interese.naziv FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=48 AND nudim_interese.id=55;
-                function spoji(){
-                    global $id;
-                    global $mysqli;
-                    global $spol;
-                    $jesam = 0;
-                    if($spol === 'M')
-                        $jesam = 1;
-                    if($spol === 'Z')
-                        $jesam = 2;
-                    global $trazim;
-                    $upit = "SELECT id, spol, trazim FROM Korisnik WHERE NOT(id = $id)";
-                    $rezultat = $mysqli->query($upit);
-                    $retci = rezultat_u_array($rezultat);
-                    $max_zbroj = 0;
-                    $max_id = 0;
-                    foreach ($retci as $key => $value) {
-                                                
-                        if($value['id'] == $id)
-                            continue;
-                        if($jesam === 1 && $value['trazim'] == 2 || $jesam === 2 && $value['trazim'] == 1)
-                            continue;
-                        if($trazim == 1 && $value['spol'] === 'Z' || $trazim ==2 && $value['spol'] ==='M')
-                            continue;
-                        $id2 = $value['id'];
-                        $upit = "SELECT COUNT(trazim_interese.naziv) AS a FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id AND nudim_interese.id=$id2";
-                        $a = $mysqli->query($upit)->fetch_object()->a;    
-                        $upit = "SELECT COUNT(trazim_interese.naziv) AS b FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id2 AND nudim_interese.id=$id";
-                        $b = $mysqli->query($upit)->fetch_object()->b;
-                        if($a+$b > $max_zbroj){
-                            $max_id = $value['id'];
-                            $max_zbroj = $a + $b;
-                        }                         
-                    }
-                    if($max_zbroj > 0){
-                        $upit = "INSERT INTO spojeni  VALUES ($id,$max_id)";
-                        $rezultat = $mysqli->query($upit);
-                        $upit = "INSERT INTO spojeni  VALUES ($max_id,$id)";
-                        $rezultat = $mysqli->query($upit);
-                        return $max_id;
-                    }
-                   return -1;
-                }
+                
             ?>
-            <div>
-            <?php
-                $partner =  spoji();
-                if($partner === -1){
-                    echo "Nažalost nema kompatibilnih partnera, pokušaj urediti svoj profil :)";
-                }
-                else{
-                    $_SESSION['partner'] = $partner;
-                    echo '<form action="profile_other.php"><button type="submit" name="spoji">Spoji me</button></form>';
-                    
-                }
-            ?>
-            </div> 
+            
 
         <!-- </div> -->
 

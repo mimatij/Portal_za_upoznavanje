@@ -70,6 +70,18 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                 echo " checked=checked";
               
             }
+
+            function provjeri_zadanost_spola($atribut){
+              global $mysqli;
+              global $id;
+              $sql = "SELECT trazim FROM Korisnik WHERE id = $id";
+              $a = $mysqli->query($sql)->fetch_object()->trazim;
+              if($a == 3)
+                echo "checked=checked";
+              if($a == 1 && $atribut == 'M' || $a == 2 && $atribut == 'Z')
+                echo "checked=checked";
+              
+            }
           ?>
 
 
@@ -149,6 +161,26 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                         </tr>                   
                     </table>
 
+                    <br> <a class="naglaseno">Moje osobine:</a><br>
+                    <table>
+                        <tr>
+                          <td><input type="checkbox" name="osobine[]" value="Društvenost" <?php provjeri_zadanost('Društvenost', 'nudim_interese');?>>Društvenost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Hiperaktivnost" <?php provjeri_zadanost('Hiperaktivnost', 'nudim_interese');?>>Hiperaktivnost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Inteligentnost" <?php provjeri_zadanost('Inteligentnost', 'nudim_interese');?>>Inteligentnost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Iskrenost" <?php provjeri_zadanost('Iskrenost', 'nudim_interese');?>>Iskrenost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Lijenost" <?php provjeri_zadanost('Lijenost', 'nudim_interese');?>>Lijenost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Marljivost" <?php provjeri_zadanost('Marljivost', 'nudim_interese');?>>Marljivost</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" name="osobine[]" value="Ponos" <?php provjeri_zadanost('Ponos', 'nudim_interese');?>>Ponos</td>
+                          <td><input type="checkbox" name="osobine[]" value="Pričljivost" <?php provjeri_zadanost('Pričljivost', 'nudim_interese');?>>Pričljivost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Radoznalost" <?php provjeri_zadanost('Radoznalost', 'nudim_interese');?>>Radoznalost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Spretnost" <?php provjeri_zadanost('Spretnost', 'nudim_interese');?>>Spretnost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Sramežljivost" <?php provjeri_zadanost('Sramežljivost', 'nudim_interese');?>>Sramežljivost</td>
+                          <td><input type="checkbox" name="osobine[]" value="Vjernost" <?php provjeri_zadanost('Vjernost', 'nudim_interese');?>>Vjernost</td>
+                        </tr>
+                
+                    </table>
                     
 
 
@@ -163,42 +195,61 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                 <div class="container_right">
                 <form action="interests.php" method="post">
                     <br><a class="naglaseno">Partner je:</a><br>
-                    <input type="checkbox" name="trazim_spol[]" value="M" <?php provjeri_zadanost('M', 'trazim_interese');?>>Muško
-                    <input type="checkbox" name="trazim_spol[]" value="Z" <?php provjeri_zadanost('Z', 'trazim_interese');?>>Žensko
+                    <input type="checkbox" name="trazim_spol[]" value="M" <?php provjeri_zadanost_spola('M');?>>Muško
+                    <input type="checkbox" name="trazim_spol[]" value="Z" <?php provjeri_zadanost_spola('Z');?>>Žensko
                     <br><a class="naglaseno">Traži:</a><br>
-                    <input type="checkbox" name="odnos[]" value="Veza" <?php provjeri_zadanost('Veza', 'trazim_interese');?> >Vezu
-                    <input type="checkbox" name="odnos[]" value="Prijateljstvo" <?php provjeri_zadanost('Prijateljstvo', 'trazim_interese');?>>Prijateljstvo
-                    <input type="checkbox" name="odnos[]" value="Druženje" <?php provjeri_zadanost('Druženje', 'trazim_interese');?>>Druženje
-                    <input type="checkbox" name="odnos[]" value="Dopisivanje" <?php provjeri_zadanost('Dopisivanje', 'trazim_interese');?>>Dopisivanje
+                    <input type="checkbox" name="odnos2[]" value="Veza" <?php provjeri_zadanost('Veza', 'trazim_interese');?> >Vezu
+                    <input type="checkbox" name="odnos2[]" value="Prijateljstvo" <?php provjeri_zadanost('Prijateljstvo', 'trazim_interese');?>>Prijateljstvo
+                    <input type="checkbox" name="odnos2[]" value="Druženje" <?php provjeri_zadanost('Druženje', 'trazim_interese');?>>Druženje
+                    <input type="checkbox" name="odnos2[]" value="Dopisivanje" <?php provjeri_zadanost('Dopisivanje', 'trazim_interese');?>>Dopisivanje
                     <br><a class="naglaseno">Partnerovi hobiji:</a><br>
                     <table>
                         <tr>
-                          <td><input type="checkbox" name="hobiji[]" value="Auti" <?php provjeri_zadanost('Auti', 'trazim_interese');?>>Auti</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Društvene igre" <?php provjeri_zadanost('Društvene igre', 'trazim_interese');?>>Društvene igre</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Film" <?php provjeri_zadanost('Film', 'trazim_interese');?>>Film</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Fotografija" <?php provjeri_zadanost('Fotografija', 'trazim_interese');?>>Fotografija</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Književnost" <?php provjeri_zadanost('Književnost', 'trazim_interese');?>>Književnost</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Kuhanje" <?php provjeri_zadanost('Kuhanje', 'trazim_interese');?>>Kuhanje</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Auti" <?php provjeri_zadanost('Auti', 'trazim_interese');?>>Auti</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Društvene igre" <?php provjeri_zadanost('Društvene igre', 'trazim_interese');?>>Društvene igre</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Film" <?php provjeri_zadanost('Film', 'trazim_interese');?>>Film</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Fotografija" <?php provjeri_zadanost('Fotografija', 'trazim_interese');?>>Fotografija</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Književnost" <?php provjeri_zadanost('Književnost', 'trazim_interese');?>>Književnost</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Kuhanje" <?php provjeri_zadanost('Kuhanje', 'trazim_interese');?>>Kuhanje</td>
                         </tr>
                         <tr>
-                          <td><input type="checkbox" name="hobiji[]" value="Muzika" <?php provjeri_zadanost('Muzika', 'trazim_interese');?>>Muzika</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Plesanje" <?php provjeri_zadanost('Plesanje', 'trazim_interese');?>>Plesanje</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Politika" <?php provjeri_zadanost('Politika', 'trazim_interese');?>>Politika</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Priroda" <?php provjeri_zadanost('Priroda', 'trazim_interese');?>>Priroda</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Putovanja" <?php provjeri_zadanost('Putovanja', 'trazim_interese');?>>Putovanja</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Računala" <?php provjeri_zadanost('Računala', 'trazim_interese');?>>Računala</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Muzika" <?php provjeri_zadanost('Muzika', 'trazim_interese');?>>Muzika</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Plesanje" <?php provjeri_zadanost('Plesanje', 'trazim_interese');?>>Plesanje</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Politika" <?php provjeri_zadanost('Politika', 'trazim_interese');?>>Politika</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Priroda" <?php provjeri_zadanost('Priroda', 'trazim_interese');?>>Priroda</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Putovanja" <?php provjeri_zadanost('Putovanja', 'trazim_interese');?>>Putovanja</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Računala" <?php provjeri_zadanost('Računala', 'trazim_interese');?>>Računala</td>
                         </tr>
                         <tr>
-                          <td><input type="checkbox" name="hobiji[]" value="Računalne igre" <?php provjeri_zadanost('Računalne igre', 'trazim_interese');?>>Računalne igre</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Umjetnost" <?php provjeri_zadanost('Umjetnost', 'trazim_interese');?>>Umjetnost</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Izlasci"<?php provjeri_zadanost('Izlasci', 'trazim_interese');?>>Izlasci</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Kafić"<?php provjeri_zadanost('Kafić', 'trazim_interese');?>>Kafić</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Jedrenje"<?php provjeri_zadanost('Jedrenje', 'trazim_interese');?>>Jedrenje</td>
-                          <td><input type="checkbox" name="hobiji[]" value="Kazalište"<?php provjeri_zadanost('Kazalište', 'trazim_interese');?>>Kazalište</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Računalne igre" <?php provjeri_zadanost('Računalne igre', 'trazim_interese');?>>Računalne igre</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Umjetnost" <?php provjeri_zadanost('Umjetnost', 'trazim_interese');?>>Umjetnost</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Izlasci"<?php provjeri_zadanost('Izlasci', 'trazim_interese');?>>Izlasci</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Kafić"<?php provjeri_zadanost('Kafić', 'trazim_interese');?>>Kafić</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Jedrenje"<?php provjeri_zadanost('Jedrenje', 'trazim_interese');?>>Jedrenje</td>
+                          <td><input type="checkbox" name="hobiji2[]" value="Kazalište"<?php provjeri_zadanost('Kazalište', 'trazim_interese');?>>Kazalište</td>
                         </tr>                   
                     </table>
 
-                    
+                    <br> <a class="naglaseno">Osobine koje tražim:</a><br>
+                    <table>
+                        <tr>
+                          <td><input type="checkbox" name="osobine2[]" value="Društvenost" <?php provjeri_zadanost('Društvenost', 'trazim_interese');?>>Društvenost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Hiperaktivnost" <?php provjeri_zadanost('Hiperaktivnost', 'trazim_interese');?>>Hiperaktivnost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Inteligentnost" <?php provjeri_zadanost('Inteligentnost', 'trazim_interese');?>>Inteligentnost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Iskrenost" <?php provjeri_zadanost('Iskrenost', 'trazim_interese');?>>Iskrenost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Lijenost" <?php provjeri_zadanost('Lijenost', 'trazim_interese');?>>Lijenost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Marljivost" <?php provjeri_zadanost('Marljivost', 'trazim_interese');?>>Marljivost</td>
+                        </tr>
+                        <tr>
+                          <td><input type="checkbox" name="osobine2[]" value="Ponos" <?php provjeri_zadanost('Ponos', 'trazim_interese');?>>Ponos</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Pričljivost" <?php provjeri_zadanost('Pričljivost', 'trazim_interese');?>>Pričljivost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Radoznalost" <?php provjeri_zadanost('Radoznalost', 'trazim_interese');?>>Radoznalost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Spretnost" <?php provjeri_zadanost('Spretnost', 'trazim_interese');?>>Spretnost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Sramežljivost" <?php provjeri_zadanost('Sramežljivost', 'trazim_interese');?>>Sramežljivost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Vjernost" <?php provjeri_zadanost('Vjernost', 'trazim_interese');?>>Vjernost</td>
+                        </tr>
+                
+                    </table>
 
 
                     <br><br><br>

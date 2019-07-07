@@ -33,15 +33,16 @@ function ubaci_u_bazu($cbox, $tablica, $mysqli, $id){
 
 ubaci_u_bazu('odnos', 'nudim_interese', $mysqli, $id);
 ubaci_u_bazu('hobiji', 'nudim_interese', $mysqli, $id);
+ubaci_u_bazu('osobine', 'nudim_interese', $mysqli, $id);
 ubaci_u_bazu('odnos2', 'trazim_interese', $mysqli, $id);
 ubaci_u_bazu('hobiji2', 'trazim_interese', $mysqli, $id);
-ubaci_u_bazu('trazim_spol', 'trazim', $mysqli, $id);
+ubaci_u_bazu('osobine2', 'trazim_interese', $mysqli, $id);
 
 if(isset($_POST['trazim_spol'])){
   $polje = $_POST['trazim_spol'];
   $x=0;
   foreach($polje as $vrijednost){
-    if($x >0)
+    if($x > 0)
       $x = 3;
     if($vrijednost === 'M' && $x === 0)
       $x = 1;
