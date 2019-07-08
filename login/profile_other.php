@@ -50,70 +50,58 @@ $email = $korisnik['email'];
 
         <br>
 
-
-        
-        <p class="pozdrav">Bok <?php echo " " . $_SESSION['ime'] . ", ovo je profil tvog kompatibilnog partnera!"; ?></p>
+        <p class="pozdrav">Ovo je profil tvog kompatibilnog partnera!</p>
 
         <!-- <div class="personal_card"> -->
-            <img class="user_image" src="korisnik.jpg" title="user_image"/>
+            <img class="user_image" src="korisnik.jpg" title="user_image"/> 
 
-            <form action="../chat/chat.html">
-            <button type="submit" name="chat">Pošalji poruku!</button>
-            </form>        
-
-            <!-- **treba li form ovdje uopce? -->
             <form class="" action="profile.php" method="post"> 
-                <!-- 
-                <h3>SLIKA ne zaboravit
-                    ne znam je li dobra ideja spremat sliku u tablicu Korisnik, di
-                    su i svi osobni podaci. Mislim da je okej, ali triba malo istražit *samo ideja
-                </h3>
-                <br>
-                <h3>Chat - bi li tribalo spremat te poruke? Kao imat neki history?
-                    Ako da, onda nam i za to triba nekakva tablica - možda za svaki razgovor kreirat
-                    novu tablicu i spremat poruke po redu - po slanju i onda ih samo izlistat.
-                    Triba pamtit i email onog koji je posalo poruku. *samo ideja
-                </h3> 
-                -->
                 <div class="user_info">
 
                     <!-- Osnovni podaci:<br> -->
-                    Ime: <?php echo " $ime" . ' ' . "$prezime"; ?><br><br>
-                    Spol:
+                    <a>Ime:</a> <?php echo " $ime" . ' ' . "$prezime"; ?><br><br>
+                    <a>Spol:</a>
                     <?php
                         if($spol === "M") echo ' muško';
                         elseif($spol === "Z") echo ' žensko';
                     ?><br><br>
-                    Grad: <?php echo " " . $grad; ?><br><br>
-                    <!-- <button type="submit" name="btn_uredi">Uredi</button> **ovo ne treba vise jer u izborniku postoji mogucnost "uredi profil" -->
+                    <a>Grad:</a> <?php echo " " . $grad; ?><br><br>
                 </div>
             </form>
-
-            Mene opisuju sljedeći pojmovi:
-            <?php 
-               
-                
-                $upit = "SELECT naziv FROM nudim_interese WHERE id = $id";
-                $rezultat = $mysqli->query($upit);
-                $retci = rezultat_u_array($rezultat);
-                foreach ($retci as $key => $value) {
-                    foreach ($value as $key => $value2) {
-                        echo $value2.", ";
-                    }
-                }
-                
-
-                //SELECT id FROM Korisnik WHERE NOT(id = $id); svi idevi
-                //SELECT naziv FROM nudim_interese where id = 48;
-               // SELECT naziv FROM trazim where id = 48;/
-
-               
-               //SELECT trazim_interese.naziv FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=48 AND nudim_interese.id=55;
-                
-            ?>
-            
-
         <!-- </div> -->
+
+        <HR class="break"><br>
+
+        <a class="text">Ovu osobu opisuju sljedeći pojmovi:</a>
+
+        <?php 
+            $upit = "SELECT naziv FROM nudim_interese WHERE id = $id";
+            $rezultat = $mysqli->query($upit);
+            $retci = rezultat_u_array($rezultat);
+            $brojac = -1;
+            echo '<ul class="lista_osobine">';
+            foreach ($retci as $key => $value) {
+                foreach ($value as $key => $value2) {
+                    $brojac++;
+                    if($brojac % 5 === 0) echo '</ul><ul class="lista_osobine">';
+                    echo '<li>' . $value2 . '</li>';
+                }
+            }
+            echo '</ul>';
+
+            //SELECT id FROM Korisnik WHERE NOT(id = $id); svi idevi
+            //SELECT naziv FROM nudim_interese where id = 48;
+            //SELECT naziv FROM trazim where id = 48;/
+            
+            //SELECT trazim_interese.naziv FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=48 AND nudim_interese.id=55;
+        ?>
+        
+        <br><HR class="break"><br>
+
+        <a class="text">Želiš poslati poruku? Klikni na sljedeći gumb i započni razgovor!</a><br>
+        <form action="../chat/chat.html">
+            <button type="submit" name="chat" style="font-size: 38px;">&#128140;</button>
+        </form>  
 
     </body>
 </html>
