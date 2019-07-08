@@ -62,7 +62,7 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
 
         <br>
 
-<p class="pozdrav">Bok<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo ", " . $_SESSION['ime']; echo "!"; ?></p>
+        <p class="pozdrav">Bok<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo ", " . $_SESSION['ime']; echo "!"; ?></p>
         
         <!-- <div class="personal_card"> -->
             <!-- <img class="user_image" src="korisnik.jpg" title="user_image"/>         -->
