@@ -62,14 +62,12 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
 
         <br>
 
-
-        <p class="pozdrav">Bok<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo ", " . $_SESSION['ime']; echo "!"; ?></p>
+<p class="pozdrav">Bok<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo ", " . $_SESSION['ime']; echo "!"; ?></p>
+        
         <!-- <div class="personal_card"> -->
             <!-- <img class="user_image" src="korisnik.jpg" title="user_image"/>         -->
 
-         
             <form class="" action="profile.php" method="post"> 
-
                 <div class="user_info">
                     <a>E-mail:</a> <a class="cursive"><?php echo $email; ?></a><br><br>
                     <a>Ime:</a> <a class="cursive"><?php echo " $ime" . ' ' . "$prezime"; ?></a><br><br>
@@ -105,54 +103,51 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
             echo '</ul>';
             if( $brojac === -1 ) echo "<a class='subtext'>Nisu uneseni podaci o tebi.</a>";
     
-                
-
-                //SELECT id FROM Korisnik WHERE NOT(id = $id); svi idevi
-                //SELECT naziv FROM nudim_interese where id = 48;
-               // SELECT naziv FROM trazim where id = 48;/
-
-               
-               //SELECT trazim_interese.naziv FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=48 AND nudim_interese.id=55;
-                function spoji(){
-                    global $id;
-                    global $mysqli;
-                    global $spol;
-                    $jesam = 0;
-                    if($spol === 'M')
-                        $jesam = 1;
-                    if($spol === 'Z')
-                        $jesam = 2;
-                    global $trazim;
-                    $upit = "SELECT id, spol, trazim FROM Korisnik WHERE NOT(id = $id)";
-                    $rezultat = $mysqli->query($upit);
-                    $retci = rezultat_u_array($rezultat);
-                    $max_zbroj = 0;
-                    $max_id = 0;
-                    foreach ($retci as $key => $value) {
-                                                
-                        if($value['id'] == $id)
-                            continue;
-                        if($jesam === 1 && $value['trazim'] == 2 || $jesam === 2 && $value['trazim'] == 1)
-                            continue;
-                        if($trazim == 1 && $value['spol'] === 'Z' || $trazim ==2 && $value['spol'] ==='M')
-                            continue;
-                        $id2 = $value['id'];
-                        $upit = "SELECT COUNT(trazim_interese.naziv) AS a FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id AND nudim_interese.id=$id2";
-                        $a = $mysqli->query($upit)->fetch_object()->a;    
-                        $upit = "SELECT COUNT(trazim_interese.naziv) AS b FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id2 AND nudim_interese.id=$id";
-                        $b = $mysqli->query($upit)->fetch_object()->b;
-                        if($a+$b > $max_zbroj){
-                            $max_id = $value['id'];
-                            $max_zbroj = $a + $b;
-                        }                         
-                    }
-                    if($max_zbroj > 0){
-                        return $max_id;
-                    }
-                   return -1;
+            //SELECT id FROM Korisnik WHERE NOT(id = $id); svi idevi
+            //SELECT naziv FROM nudim_interese where id = 48;
+            //SELECT naziv FROM trazim where id = 48;/
+            
+            //SELECT trazim_interese.naziv FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=48 AND nudim_interese.id=55;
+            function spoji(){
+                global $id;
+                global $mysqli;
+                global $spol;
+                $jesam = 0;
+                if($spol === 'M')
+                    $jesam = 1;
+                if($spol === 'Z')
+                    $jesam = 2;
+                global $trazim;
+                $upit = "SELECT id, spol, trazim FROM Korisnik WHERE NOT(id = $id)";
+                $rezultat = $mysqli->query($upit);
+                $retci = rezultat_u_array($rezultat);
+                $max_zbroj = 0;
+                $max_id = 0;
+                foreach ($retci as $key => $value) {
+                                            
+                    if($value['id'] == $id)
+                        continue;
+                    if($jesam === 1 && $value['trazim'] == 2 || $jesam === 2 && $value['trazim'] == 1)
+                        continue;
+                    if($trazim == 1 && $value['spol'] === 'Z' || $trazim ==2 && $value['spol'] ==='M')
+                        continue;
+                    $id2 = $value['id'];
+                    $upit = "SELECT COUNT(trazim_interese.naziv) AS a FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id AND nudim_interese.id=$id2";
+                    $a = $mysqli->query($upit)->fetch_object()->a;    
+                    $upit = "SELECT COUNT(trazim_interese.naziv) AS b FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id2 AND nudim_interese.id=$id";
+                    $b = $mysqli->query($upit)->fetch_object()->b;
+                    if($a+$b > $max_zbroj){
+                        $max_id = $value['id'];
+                        $max_zbroj = $a + $b;
+                    }                         
                 }
-            ?>
-            </div>
+                if($max_zbroj > 0){
+                    return $max_id;
+                }
+                return -1;
+            }
+        ?>
+</div>
         <br><HR class="break"><br>
 <div class="container">
         <?php
