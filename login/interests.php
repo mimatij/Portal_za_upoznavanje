@@ -55,16 +55,16 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
               echo '<p class="container_success">Registracija uspješna! '
                 . '<i class="fa fa-check" style="color:green; font-size:40px;"></i>'
                 . '<br>Unesite svoje osobne podatke i interese.</p>';
+              // echo 'Unesite svoje osobne podatke i interese.<br>';
             }
             elseif($_SESSION['ulogiran'] === true)
             {
               echo '<p class="container_success">Izmijenite podatke i spremite promjene.</p>';
             }
-        ?>
+          ?>
       
-        <br>
-
-        <?php
+          <br>
+          <?php
             function provjeri_zadanost($atribut, $tablica){
               global $mysqli;
               global $id;
@@ -83,8 +83,10 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                 echo "checked=checked";
               if($a == 1 && $atribut == 'M' || $a == 2 && $atribut == 'Z')
                 echo "checked=checked";
+              
             }
           ?>
+
 
           <a class="osobni_podaci">Osobni podaci:</a>
           <a class="moji_interesi">Moji interesi:</a><br>
@@ -314,12 +316,6 @@ function locate()
 }    
 </script>
 
-
-          
-
-          
-      
-          
 
     </body>
 </html>
