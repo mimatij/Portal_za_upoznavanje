@@ -58,6 +58,8 @@ container.css('background-image', backgrounds[0]);
         </form>
     </div>
     
+    <br>
+    
     <div id="left" class="left"></div>
     <div class="right">
         <form action="index.php" method="post">
@@ -78,28 +80,32 @@ container.css('background-image', backgrounds[0]);
 
       }
      ?>
+      
+      
+      <div class="dolje">
+          <footer>
+              <div class="footerContainer">
+                <div class="footerBox">
+                    <div class="footerItem">
+                      <!-- <p style="font-size: 200%;" class="sredina">&#xf0e0;</p> -->
+                      <p class="sredina"><i class="fa fa-envelope" style="font-size:42px;color:red"></i></p>
+                      <p>upoznajme@gmail.com</p>
+                    </div>
 
-      <footer>
-      		<div class="footerContainer">
-        		<div class="footerBox">
-          			<div class="footerItem">
-          				<!-- <p style="font-size: 200%;" class="sredina">&#xf0e0;</p> -->
-                  <p class="sredina"><i class="fa fa-envelope" style="font-size:42px;color:red"></i></p>
-                  <p>upoznajme@gmail.com</p>
-          			</div>
+                    <div class="footerItem">
+                    <p style="font-size: 200%">&#x1F4CD;</p>
+                    <p>Ljubavna Adresa 0, Zagreb</p>
+                    </div>
 
-          			<div class="footerItem">
-        				<p style="font-size: 200%">&#x1F4CD;</p>
-        				<p>Ljubavna Adresa 0, Zagreb</p>
-          			</div>
+                </div>
+              </div>
+        </footer>
+            <footer>  
+              <div class="footerSredina">
+                <a>Copyright © 2019 Luka Naglić, Mia Matijašević, Mia Tadić, Kristina Udovičić. All rights reserved.</a>
+              </div>
+          </footer>
+      </div>
 
-        		</div>
-      		</div>
-		</footer>
-      	<footer>	
-      		<div class="footerSredina">
-      			<a>Copyright © 2019 Luka Naglić, Mia Matijašević, Mia Tadić, Kristina Udovičić. All rights reserved.</a>
-      		</div>
-    	</footer>
   </body>
 </html>
