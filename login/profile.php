@@ -13,7 +13,8 @@ include_once('../database/db.php');
 $email = $_SESSION['email'];
 $sql = "SELECT id FROM Korisnik where email='$email'";
 $id = $mysqli->query($sql)->fetch_object()->id;
-$rezultat = $mysqli->query("SELECT ime, prezime, spol, grad, trazim FROM Korisnik WHERE email='$email'");
+$_SESSION['mojid'] = $id;
+$rezultat = $mysqli->query("SELECT ime, prezime, spol, grad, trazim, geo_sirina, geo_duzina FROM Korisnik WHERE email='$email'");
 $korisnik = $rezultat->fetch_assoc();
 
 $ime = $korisnik['ime'];
@@ -21,6 +22,9 @@ $prezime = $korisnik['prezime'];
 $spol = $korisnik['spol'];
 $trazim = $korisnik['trazim'];
 $grad = $korisnik['grad'];
+$sirina = $korisnik['geo_sirina'];
+$duzina = $korisnik['geo_duzina'];
+
 
 $_SESSION['ime'] = $ime;
 $_SESSION['prezime'] = $prezime;
@@ -60,7 +64,26 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
 
 
         <p class="pozdrav">Hello, <?php echo " " . $_SESSION['ime'] . "!"; ?></p>
-
+        
+        <?php
+            /*   
+           $select_image="SELECT slika FROM slike WHERE id_korisnika=48";
+           $var=$mysqli->query($select_image);
+           //$result = $db->query("SELECT image FROM images WHERE id = {$_GET['id']}");
+    
+           if($var->num_rows > 0){
+               $imgData = $var->fetch_assoc();
+               
+               //Render image
+               header("Content-type: image/jpg"); 
+               echo $imgData['slika']; 
+           }else{
+               echo 'Image not found...';
+           }
+            //echo "< img src = fetch_image.php?name=".$image_name." width=200 height=200 >";
+            */
+        ?>
+        
         <!-- <div class="personal_card"> -->
             <img class="user_image" src="korisnik.jpg" title="user_image"/>        
 
@@ -90,7 +113,16 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                     Grad: <?php echo " " . $grad; ?><br><br>
                     <!-- <button type="submit" name="btn_uredi">Uredi</button> **ovo ne treba vise jer u izborniku postoji mogucnost "uredi profil" -->
                 </div>
+            <!--
             </form>
+
+            <form method="POST" action="getdata.php" enctype="multipart/form-data">
+            <input type="file" name="myimage">
+            <input type="submit" name="submit_image" value="Upload">
+            </form>
+            -->
+
+
 
             Mene opisuju sljedeći pojmovi:
             <?php 
@@ -116,13 +148,15 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                     global $id;
                     global $mysqli;
                     global $spol;
+                    global $sirina;
+                    global $duzina;
                     $jesam = 0;
                     if($spol === 'M')
                         $jesam = 1;
                     if($spol === 'Z')
                         $jesam = 2;
                     global $trazim;
-                    $upit = "SELECT id, spol, trazim FROM Korisnik WHERE NOT(id = $id)";
+                    $upit = "SELECT id, spol, trazim, geo_sirina, geo_duzina FROM Korisnik WHERE NOT(id = $id)";
                     $rezultat = $mysqli->query($upit);
                     $retci = rezultat_u_array($rezultat);
                     $max_zbroj = 0;
@@ -140,14 +174,14 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                         $a = $mysqli->query($upit)->fetch_object()->a;    
                         $upit = "SELECT COUNT(trazim_interese.naziv) AS b FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id2 AND nudim_interese.id=$id";
                         $b = $mysqli->query($upit)->fetch_object()->b;
-                        if($a+$b > $max_zbroj){
+
+                        $c = 5/(1+abs($sirina - $value['geo_sirina']) + abs($duzina - $value['duzina']) ))
+                        if($a+$b +$c > $max_zbroj){
                             $max_id = $value['id'];
-                            $max_zbroj = $a + $b;
+                            $max_zbroj = $a + $b +$c;
                         }                         
                     }
                     if($max_zbroj > 0){
-                        $upit = "INSERT INTO spojeni  VALUES ($id,$max_id)";
-                        $rezultat = $mysqli->query($upit);
                         return $max_id;
                     }
                    return -1;

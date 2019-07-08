@@ -5,6 +5,10 @@ if(!isset($_SESSION)) {
 }
 include_once('../database/db.php');
 $id = $_SESSION['partner'];
+$mojid = $_SESSION['mojid'];
+$upit = "INSERT INTO spojeni  VALUES ($id,$mojid)";
+$rezultat = $mysqli->query($upit);
+
 
 $rezultat = $mysqli->query("SELECT ime, prezime, spol, grad, trazim, email FROM Korisnik WHERE id='$id'");
 $korisnik = $rezultat->fetch_assoc();
