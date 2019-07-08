@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Upoznaj me! - upitnik</title>
+    <!-- tu san dvi stvari izbrisala,pa mia mos unit kako bi tila da izgleda chat-->
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- "http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext" -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+</head>
+<body>
+
+    <div class="logoAndNavbar">
+            <a href="../login/profile.php"><img src="../login/logo.png" title="upoznajme" class="logo_image" /></a>
+
+        <div class="navbar">
+            <ul class="nav">
+                <li><a href="../login/profile.php" data-hover="Profil">Profil</a></li>
+                <li><a href="messanger.html" data-hover="Chat">Chat</a></li>
+                <li class="active"><a href="../login/interests.php" data-hover="Uredi profil">Uredi profil</a></li>
+                <li><a href="../login/logout.php" data-hover="Logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <br>
+
+    <h2 id="naslov">Popis matcheva:</h2>
+    <div id="chat"></div>
+    <br>
+    <h2>Zahtjevi za poruku:</h2>
+    <br>
+    <div id="zahtjevi"></div>
+
+    <script>
+
+    $(document).ready(function(){
+        //Prvo doznajemo ko su nam matchevi
+        $.ajax(
+        {
+            url: "Match.php",
+            type: "GET",
+            data:
+            {},
+            dataType: "json",
+            success: function(data){
+                crtajTablicu(data);
+
+            },
+            error: function( xhr, status )
+            {
+              if(status !== null) console.log("nije ok");
+            }
+        });
+
+
+    });
+
+    $(document).on("click",".btn",function(){
+        //console.log("Kliknuti id:"+this.id);
+        //Postavljamo u sessiju id kliknutog korisnika
+        $.ajax(
+        {
+            url: "session.php",
+            type: "GET",
+            data:
+            {
+                id: this.id
+            },
+            dataType: "json",
+            success: function(data){
+                //if(data.uspjeh)
+                   //console.log("uspjeh");
+                window.location.href = "chat.html"; //-->preusmjeri me
+
+            },
+            error: function( xhr, status )
+            {
+              if(status !== null) 
+                console.log("nije ok");
+            }
+        });
+
+    });
+
+
+
+    function crtajTablicu(data)
+    {
+        
+        var tbl=$("<table></table>");
+        for(var i=0; i < data.spojen_sa.length;++i){
+            var tr=$("<tr></tr>");
+            var td_ime=$("<td></td>");
+            td_ime.css({"font-weight":"bold"});
+            td_ime.html(""+data.spojen_sa[i].ime2+" "+ data.spojen_sa[i].prezime2);
+            var td_botun = $("<td></td>");
+            var botun=$("<input>");
+            botun.prop("type","button");
+            botun.prop("class","btn");
+            botun.prop("id",""+data.spojen_sa[i].id2);
+            botun.prop("value","Chat");
+            td_botun.append(botun);
+
+            tr.append(td_ime).append(td_botun);
+            tbl.append(tr);
+        }
+
+        $("#chat").html(tbl);
+
+        //Provjera onih koji su trazili spoji me,ali im "nije uzvraceno",i mozda su poslali poruku
+        var tbl=$("<table></table>");
+        for(var i=0; i < data.zahtjevi.length;++i){
+            var flag=true;
+
+            for(var j=0; j < data.spojen_sa.length;++j){
+                if(data.spojen_sa[j].email2 === data.zahtjevi[i].email2)
+                    flag=false;      
+            }
+
+            if(flag){
+                var tr=$("<tr></tr>");
+                var td_ime=$("<td></td>");
+                td_ime.css({"font-weight":"bold"});
+                td_ime.html(""+data.zahtjevi[i].ime2+" "+ data.zahtjevi[i].prezime2);
+                var td_botun = $("<td></td>");
+                var botun=$("<input>");
+                botun.prop("type","button");
+                botun.prop("class","btn");
+                botun.prop("id",""+data.zahtjevi[i].id2);
+                botun.prop("value","Chat");
+                td_botun.append(botun);
+
+                tr.append(td_ime).append(td_botun);
+                tbl.append(tr);
+
+            }
+        }
+        $("#zahtjevi").html(tbl);
+    }
+
+    </script>
+</body>
+</html>

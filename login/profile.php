@@ -53,7 +53,7 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
             <div class="navbar">
                 <ul class="nav">
                     <li class="active"><a href="profile.php" data-hover="Profil">Profil</a></li>
-                    <li><a href="chat.php" data-hover="Chat">Chat</a></li>
+                    <li><a href="../chat/messanger.html" data-hover="Chat">Chat</a></li>
                     <li><a href="interests.php" data-hover="Uredi profil">Uredi profil</a></li>
                     <li><a href="logout.php" data-hover="Logout">Logout</a></li>
                 </ul>
@@ -63,79 +63,48 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
         <br>
 
 
-        <p class="pozdrav">Hello, <?php echo " " . $_SESSION['ime'] . "!"; ?></p>
-        
-        <?php
-            /*   
-           $select_image="SELECT slika FROM slike WHERE id_korisnika=48";
-           $var=$mysqli->query($select_image);
-           //$result = $db->query("SELECT image FROM images WHERE id = {$_GET['id']}");
-    
-           if($var->num_rows > 0){
-               $imgData = $var->fetch_assoc();
-               
-               //Render image
-               header("Content-type: image/jpg"); 
-               echo $imgData['slika']; 
-           }else{
-               echo 'Image not found...';
-           }
-            //echo "< img src = fetch_image.php?name=".$image_name." width=200 height=200 >";
-            */
-        ?>
-        
+        <p class="pozdrav">Bok<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo ", " . $_SESSION['ime']; echo "!"; ?></p>
         <!-- <div class="personal_card"> -->
-            <img class="user_image" src="korisnik.jpg" title="user_image"/>        
+            <!-- <img class="user_image" src="korisnik.jpg" title="user_image"/>         -->
 
-            <!-- **treba li form ovdje uopce? -->
+         
             <form class="" action="profile.php" method="post"> 
-                <!-- 
-                <h3>SLIKA ne zaboravit
-                    ne znam je li dobra ideja spremat sliku u tablicu Korisnik, di
-                    su i svi osobni podaci. Mislim da je okej, ali triba malo istražit *samo ideja
-                </h3>
-                <br>
-                <h3>Chat - bi li tribalo spremat te poruke? Kao imat neki history?
-                    Ako da, onda nam i za to triba nekakva tablica - možda za svaki razgovor kreirat
-                    novu tablicu i spremat poruke po redu - po slanju i onda ih samo izlistat.
-                    Triba pamtit i email onog koji je posalo poruku. *samo ideja
-                </h3> 
-                -->
-                <div class="user_info">
 
-                    <!-- Osnovni podaci:<br> -->
-                    Ime: <?php echo " $ime" . ' ' . "$prezime"; ?><br><br>
-                    Spol:
+                <div class="user_info">
+                    <a>E-mail:</a> <a class="cursive"><?php echo $email; ?></a><br><br>
+                    <a>Ime:</a> <a class="cursive"><?php echo " $ime" . ' ' . "$prezime"; ?></a><br><br>
+                    <a>Spol:</a><a class="cursive">
                     <?php
                         if($spol === "M") echo ' muško';
                         elseif($spol === "Z") echo ' žensko';
-                    ?><br><br>
-                    Grad: <?php echo " " . $grad; ?><br><br>
-                    <!-- <button type="submit" name="btn_uredi">Uredi</button> **ovo ne treba vise jer u izborniku postoji mogucnost "uredi profil" -->
+                    ?></a><br><br>
+                    <a>Grad:</a> <a class="cursive"><?php echo " " . $grad; ?></a>
                 </div>
-            <!--
             </form>
+        <!-- </div> -->
 
-            <form method="POST" action="getdata.php" enctype="multipart/form-data">
-            <input type="file" name="myimage">
-            <input type="submit" name="submit_image" value="Upload">
-            </form>
-            -->
+        <HR class="break"><br>
 
-
-
-            Mene opisuju sljedeći pojmovi:
-            <?php 
-               
+    <div class="container">
+        <a class="text">Mene opisuju sljedeći pojmovi:</a>
+                    
+        <?php 
                 
-                $upit = "SELECT naziv FROM nudim_interese WHERE id = $id";
-                $rezultat = $mysqli->query($upit);
-                $retci = rezultat_u_array($rezultat);
-                foreach ($retci as $key => $value) {
-                    foreach ($value as $key => $value2) {
-                        echo $value2.", ";
-                    }
+            $upit = "SELECT naziv FROM nudim_interese WHERE id = $id";
+            $rezultat = $mysqli->query($upit);
+            $retci = rezultat_u_array($rezultat);
+            $brojac = -1;
+            echo '<ul class="lista_osobine">';
+            foreach ($retci as $key => $value) {
+                foreach ($value as $key => $value2) {
+                    $brojac++;
+                    if($brojac % 5 === 0) echo '</ul><ul class="lista_osobine">';
+                    echo '<li>' . $value2 . '</li>';
                 }
+            }
+            echo '</ul>';
+            if( $brojac === -1 ) echo "<a class='subtext'>Nisu uneseni podaci o tebi.</a>";
+    
                 
 
                 //SELECT id FROM Korisnik WHERE NOT(id = $id); svi idevi
@@ -148,15 +117,13 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                     global $id;
                     global $mysqli;
                     global $spol;
-                    global $sirina;
-                    global $duzina;
                     $jesam = 0;
                     if($spol === 'M')
                         $jesam = 1;
                     if($spol === 'Z')
                         $jesam = 2;
                     global $trazim;
-                    $upit = "SELECT id, spol, trazim, geo_sirina, geo_duzina FROM Korisnik WHERE NOT(id = $id)";
+                    $upit = "SELECT id, spol, trazim FROM Korisnik WHERE NOT(id = $id)";
                     $rezultat = $mysqli->query($upit);
                     $retci = rezultat_u_array($rezultat);
                     $max_zbroj = 0;
@@ -174,11 +141,9 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                         $a = $mysqli->query($upit)->fetch_object()->a;    
                         $upit = "SELECT COUNT(trazim_interese.naziv) AS b FROM trazim_interese INNER JOIN nudim_interese ON trazim_interese.naziv=nudim_interese.naziv AND trazim_interese.id=$id2 AND nudim_interese.id=$id";
                         $b = $mysqli->query($upit)->fetch_object()->b;
-
-                        $c = 5/(1+abs($sirina - $value['geo_sirina']) + abs($duzina - $value['duzina']) ))
-                        if($a+$b +$c > $max_zbroj){
+                        if($a+$b > $max_zbroj){
                             $max_id = $value['id'];
-                            $max_zbroj = $a + $b +$c;
+                            $max_zbroj = $a + $b;
                         }                         
                     }
                     if($max_zbroj > 0){
@@ -187,21 +152,29 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                    return -1;
                 }
             ?>
-            <div>
-            <?php
-                $partner =  spoji();
-                if($partner === -1){
-                    echo "Nažalost nema kompatibilnih partnera, pokušaj urediti svoj profil :)";
-                }
-                else{
-                    $_SESSION['partner'] = $partner;
-                    echo '<form action="profile_other.php"><button type="submit" name="spoji">Spoji me</button></form>';
-                    
-                }
-            ?>
-            </div> 
+            </div>
+        <br><HR class="break"><br>
+<div class="container">
+        <?php
+            $partner =  spoji();
+            if($partner === -1){
+                echo "<a class='text'>Nažalost trenutno nema kompatibilnih partnera s obzirom na unesene osobine.</a><br>";
+                echo "<a class='subtext'>Pokušaj urediti svoj profil :)</a>";
+            }
+            else{
+                $_SESSION['partner'] = $partner;
+                ?>
+                <a class="text">Pronašli smo osobu za tebe koja ti najviše odgovara!</a><br>
+                <a class="subtext">S obzirom na osobine koje posjeduješ i koje tražiš kod partnera, pronašli smo osobu koja ti najbolje odgovara. Ako želiš vidjeti njezin profil, brrrrzo klikni na sljedeći gumb! :)</a><br>
+                <form action="profile_other.php">
+                    <button type="submit" name="spoji" class="heart">Spoji me</button>
+                </form>
+                <?php
+                //echo '<form action="profile_other.php"><button type="submit" name="spoji">Spoji me</button></form>';
+            }
+        ?>
+    </div>
 
-        <!-- </div> -->
-
+    <br><br>
     </body>
 </html>
