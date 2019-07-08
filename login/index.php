@@ -88,7 +88,7 @@ container.css('background-image', backgrounds[0]);
                 <div class="footerBox">
                     <div class="footerItem">
                       <!-- <p style="font-size: 200%;" class="sredina">&#xf0e0;</p> -->
-                      <p class="sredina"><i class="fa fa-envelope" style="font-size:42px;color:red"></i></p>
+                      <p class="sredina"><a href="mailto:upoznajme@gmail.com"><i class="fa fa-envelope" style="font-size:42px;color:red"></i></a></p>
                       <p>upoznajme@gmail.com</p>
                     </div>
 

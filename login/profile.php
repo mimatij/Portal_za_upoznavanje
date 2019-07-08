@@ -70,14 +70,14 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
 
             <form class="" action="profile.php" method="post"> 
                 <div class="user_info">
-                    <a>E-mail:</a> <a class="cursive"><?php echo $email; ?></a><br><br>
-                    <a>Ime:</a> <a class="cursive"><?php echo " $ime" . ' ' . "$prezime"; ?></a><br><br>
-                    <a>Spol:</a><a class="cursive">
+                    <a style="font-weight:600">e-mail:</a> <a class="cursive"><?php echo $email; ?></a><br><br>
+                    <a style="font-weight:600">Ime:</a> <a class="cursive"><?php echo " $ime" . ' ' . "$prezime"; ?></a><br><br>
+                    <a style="font-weight:600">Spol:</a><a class="cursive">
                     <?php
                         if($spol === "M") echo ' muško';
                         elseif($spol === "Z") echo ' žensko';
                     ?></a><br><br>
-                    <a>Grad:</a> <a class="cursive"><?php echo " " . $grad; ?></a>
+                    <a style="font-weight:600">Grad:</a> <a class="cursive"><?php echo " " . $grad; ?></a>
                 </div>
             </form>
         <!-- </div> -->

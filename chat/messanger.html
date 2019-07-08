@@ -2,8 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Upoznaj me! - upitnik</title>
-    <!-- tu san dvi stvari izbrisala,pa mia mos unit kako bi tila da izgleda chat-->
+    <title>Upoznaj me! - chat</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/style_messanger.css?<?php echo time(); ?>" media="screen, projection">
     <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -14,13 +15,13 @@
 <body>
 
     <div class="logoAndNavbar">
-            <a href="../login/profile.php"><img src="../login/logo.png" title="upoznajme" class="logo_image" /></a>
+        <a href="../login/profile.php"><img src="../login/logo.png" title="upoznajme" class="logo_image" /></a>
 
         <div class="navbar">
             <ul class="nav">
-                <li><a href="../login/profile.php" data-hover="Profil">Profil</a></li>
+                <li class="active"><a href="../login/profile.php" data-hover="Profil">Profil</a></li>
                 <li><a href="messanger.html" data-hover="Chat">Chat</a></li>
-                <li class="active"><a href="../login/interests.php" data-hover="Uredi profil">Uredi profil</a></li>
+                <li><a href="../login/interests.php" data-hover="Uredi profil">Uredi profil</a></li>
                 <li><a href="../login/logout.php" data-hover="Logout">Logout</a></li>
             </ul>
         </div>
@@ -28,12 +29,17 @@
 
     <br>
 
-    <h2 id="naslov">Popis matcheva:</h2>
-    <div id="chat"></div>
-    <br>
-    <h2>Zahtjevi za poruku:</h2>
-    <br>
-    <div id="zahtjevi"></div>
+    <table>
+        <tr>
+            <th>Popis matcheva:</th>
+            <th>Zahtjevi za poruku:</th>
+        </tr>
+        <tr>
+            <td><div id="chat"></div></td>
+            <td><div id="zahtjevi"></div></td>
+        </tr>
+
+    </table>
 
     <script>
 
@@ -94,10 +100,10 @@
         var tbl=$("<table></table>");
         for(var i=0; i < data.spojen_sa.length;++i){
             var tr=$("<tr></tr>");
-            var td_ime=$("<td></td>");
+            var td_ime=$("<td style='text-align:center'></td>");
             td_ime.css({"font-weight":"bold"});
             td_ime.html(""+data.spojen_sa[i].ime2+" "+ data.spojen_sa[i].prezime2);
-            var td_botun = $("<td></td>");
+            var td_botun = $("<td style='text-align:center'></td>");
             var botun=$("<input>");
             botun.prop("type","button");
             botun.prop("class","btn");
@@ -123,10 +129,10 @@
 
             if(flag){
                 var tr=$("<tr></tr>");
-                var td_ime=$("<td></td>");
+                var td_ime=$("<td style='text-align:center'></td>");
                 td_ime.css({"font-weight":"bold"});
                 td_ime.html(""+data.zahtjevi[i].ime2+" "+ data.zahtjevi[i].prezime2);
-                var td_botun = $("<td></td>");
+                var td_botun = $("<td style='text-align:center'></td>");
                 var botun=$("<input>");
                 botun.prop("type","button");
                 botun.prop("class","btn");

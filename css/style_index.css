@@ -96,7 +96,7 @@ html, body{
     margin-top: 90px;
 
     display: inline-block;
-    float: left;
+    /* float: left; */
 }
 
 .btn_register{

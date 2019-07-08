@@ -114,16 +114,20 @@ html, body{
     position: relative;
     margin-top: 20px;
     margin-bottom: 50px;
-    margin-left: 36%;
+    /* margin-left: 36%; */
     width: 400px;
     padding: 20px;
-    display: inline-block;
+    /* display: inline-block; */
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
 
     font-family: 'Raleway', Arial, sans-serif;
     font-size: 1.5em;
     /* font-style: italic; */
     border-radius: 5px;
     border: 1px solid black;
+    color: rgb(69, 11, 87);
     background-image: linear-gradient(to bottom, #f5959b, #86c6d4);
 }
 

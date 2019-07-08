@@ -19,7 +19,7 @@ html, body{
 
 .logoAndNavbar{
     position: fixed;
-    background-color: rgba(224, 208, 236);
+    background-color: rgba(224, 208, 236, 0.5);
     min-width: 100%;
     content: "";
     min-height: 90px;
@@ -91,12 +91,13 @@ html, body{
 }
 
 .chat{
+    min-height: 50px;
     width: 97%;
     height: 100%;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
+    margin-top: 150px;
     background-color: rgb(0,0,0,0.5);
     border-radius: 10px 10px 0px 0px;
     padding: 10px;

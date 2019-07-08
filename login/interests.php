@@ -93,8 +93,8 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
 
           <div class="container_left">
               <form class="" action="interests.php" method="post">
-                  <a>Ime:</a> <br><input type="text" name="ime" value="" placeholder="<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo $_SESSION['ime']; ?>"><br><br>
-                  <a>Prezime:</a> <br><input type="text" name="prezime" value="" placeholder="<?php echo $_SESSION['prezime']; ?>"><br><br>
+                  <a>Ime:</a> <br><input type="text" name="ime" value="" placeholder="<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo $_SESSION['ime']; ?>" required><br><br>
+                  <a>Prezime:</a> <br><input type="text" name="prezime" value="" placeholder="<?php echo $_SESSION['prezime']; ?>" required><br><br>
                   <a>Spol:</a><br>
                   <?php
                       if(isset($_SESSION['spol']) && $_SESSION['spol'] === "M")
