@@ -6,7 +6,7 @@ if(!isset($_SESSION)) {
 include_once('../database/db.php');
 $id = $_SESSION['partner'];
 $mojid = $_SESSION['mojid'];
-$upit = "INSERT INTO spojeni  VALUES ($id,$mojid)";
+$upit = "INSERT INTO spojeni  VALUES ($mojid,$id)";
 $rezultat = $mysqli->query($upit);
 
 
