@@ -2,13 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Upoznaj me! - upitnik</title>
-    <!-- tu san dvi stvari izbrisala,pa mia mos unit kako bi tila da izgleda chat-->
-    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+    <title>Upoznaj me! - chat</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/style_chat.css?<?php echo time(); ?>" media="screen, projection">
     <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- "http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext" -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 </head>
 <body>
@@ -19,8 +16,8 @@
         <div class="navbar">
             <ul class="nav">
                 <li><a href="../login/profile.php" data-hover="Profil">Profil</a></li>
-                <li><a href="../chat/chat.html" data-hover="Chat">Chat</a></li>
-                <li class="active"><a href="../login/interests.php" data-hover="Uredi profil">Uredi profil</a></li>
+                <li class="active"><a href="messanger.html" data-hover="Chat">Chat</a></li>
+                <li><a href="../login/interests.php" data-hover="Uredi profil">Uredi profil</a></li>
                 <li><a href="../login/logout.php" data-hover="Logout">Logout</a></li>
             </ul>
         </div>
@@ -28,24 +25,22 @@
 
     <br>
 
-    <h1 id="naslov"></h1>
-    <div id="chat"></div>
-    <br />
-    <input type="text" id="txt"><button id="btn">Pošalji</button>
+    <div id="chat" class="chat"></div>
+    <input type="text" id="txt"><button id="btn" class="posalji">Pošalji</button>
     <br>
-    <button id="btn_kraj">Kraj</button>
+    <!-- <button id="btn_kraj" class="kraj">Kraj</button> -->
 
     <script>
-    //Na pocetku moramo ono napravit popis dosadasnjih poruka
+    //Na pocetku moramo napraviti popis dosadasnjih poruka
     var ime1,ime2;
     var to_email,from_email;
     
-    var flag=true;
+    //var flag=true;
     var vrijemeZadnjegPristupa=0;
     var interval;
 
     $(document).ready(function(){
-        //prvo trebamo saznat tko je sad ulogiran i tko salje poruku
+        //Prvo trebamo saznati tko je sada ulogiran i tko salje poruku
         $.ajax(
         {
             url: "Who.php",
@@ -60,18 +55,16 @@
                // prezime2=data.prezime2;
                 to_email=data.email2;
 
-                console.log("Ovo je nas korisnik:"+ime1 +" email:");
-            
-                $( "#naslov" ).html( "Korisnik: " + ime1 );
+                //console.log("Ovo je nas korisnik:"+ime1 +" email:");
 
                   cekajPoruku();
                   $( "#btn" ).on( "click", posaljiPoruku );
                   
-                  $("#btn_kraj").on("click",function(){
+                  /*$("#btn_kraj").on("click",function(){
                       console.log("Kliknuo sam na kraj,i zelim kraj!!!");
                     flag=false;
                     console.log("flag jeee:  "+flag);
-                });
+                });*/
                 
 
             },
@@ -87,12 +80,12 @@
     function cekajPoruku()
     {
         //console.log( "cekajPoruku" );
-        console.log("Cekaj poruku from_email:"+from_email+"  to_email:" + to_email);;
-        if(flag===false){
+        //console.log("Cekaj poruku from_email:"+from_email+"  to_email:" + to_email);;
+       /* if(flag===false){
             console.log("Pokusavam zatvorit interval");
             clearTimeout(interval);
         }
-        else{
+        else{*/
         $.ajax(
         {
             url: "chat_cekajPoruku.php",
@@ -112,8 +105,9 @@
                         crtajTekst( data );
 
                         vrijemeZadnjegPristupa=data.vrijemeZadnjegPristupa;
-                        console.log("Vrijeme zadnjeg pistupa: "+vrijemeZadnjegPristupa);
+                        //console.log("Vrijeme zadnjeg pistupa: "+vrijemeZadnjegPristupa);
 
+                         //Nakon odredenog vremena pozovi funkciju
                         interval=setTimeout(function(){
                             cekajPoruku();
                             },3000); 
@@ -136,12 +130,12 @@
                     cekajPoruku();
 		    }
 
-      });  }  
+      }); // }  
     }
 
     function posaljiPoruku()
     {
-        console.log("Posalji poruku");
+        //console.log("Posalji poruku");
 
         $.ajax(
         {
@@ -166,6 +160,7 @@
         });
         // Obriši sadržaj text-boxa.
        $( "#txt" ).val( "" );
+       //Opet cekaj novu poruku,da se opet pozove setTimeout
        cekajPoruku();
   }
 
@@ -176,10 +171,32 @@
             var tr=$("<tr></tr>");
             var td_ime=$("<td></td>");
             td_ime.css({"font-weight":"bold"});
-            if(data.poruke[i].from === from_email)
+            tbl.css({"color":"white"});
+            if(data.poruke[i].from === from_email){
+                tr.css({"color":"#3fc045"});
                 td_ime.html(""+ime1+": ");
-            else
+            }
+                
+            else{
+                tbl.css({"color":"#ebc6fa"});
                 td_ime.html(""+ime2+": ");
+            }
+
+            // --> samo za razlamanje poruke na više linija ako je poruka duga
+            if(data.poruke[i].msg.length >= 120){
+                var l = 0;
+                var pom = data.poruke[i].msg;
+                var pom2 = '';
+                for(var k = 0; k < data.poruke[i].msg.length; k++){
+                    if(k !== 0 && (k % 120 === 0)){
+                        pom2 += ( pom.substring(l, k) + "<br>");
+                        l = k;
+                    }
+                }
+                data.poruke[i].msg = pom2;
+            }
+            // --> to radim do ovdje
+
             var td_msg=$("<td></td>").html(" "+data.poruke[i].msg);
 
             tr.append(td_ime).append(td_msg);

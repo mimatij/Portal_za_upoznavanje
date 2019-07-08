@@ -19,7 +19,7 @@
         <div class="navbar">
             <ul class="nav">
                 <li><a href="../login/profile.php" data-hover="Profil">Profil</a></li>
-                <li><a href="../chat/messanger.html" data-hover="Chat">Chat</a></li>
+                <li><a href="messanger.html" data-hover="Chat">Chat</a></li>
                 <li class="active"><a href="../login/interests.php" data-hover="Uredi profil">Uredi profil</a></li>
                 <li><a href="../login/logout.php" data-hover="Logout">Logout</a></li>
             </ul>
@@ -28,7 +28,7 @@
 
     <br>
 
-    <h1 id="naslov">Popis matcheva:</h1>
+    <h2 id="naslov">Popis matcheva:</h2>
     <div id="chat"></div>
     <br>
     <h2>Zahtjevi za poruku:</h2>
@@ -36,10 +36,9 @@
     <div id="zahtjevi"></div>
 
     <script>
-    //Na pocetku moramo ono napravit popis dosadasnjih poruka
 
     $(document).ready(function(){
-        //prvo trebamo saznat tko je sad ulogiran i tko salje poruku
+        //Prvo doznajemo ko su nam matchevi
         $.ajax(
         {
             url: "Match.php",
@@ -61,8 +60,8 @@
     });
 
     $(document).on("click",".btn",function(){
-        console.log("Kliknuti id:"+this.id);
-        //sad tu triban dodat ajax
+        //console.log("Kliknuti id:"+this.id);
+        //Postavljamo u sessiju id kliknutog korisnika
         $.ajax(
         {
             url: "session.php",
@@ -73,14 +72,15 @@
             },
             dataType: "json",
             success: function(data){
-                if(data.uspjeh)
-                    console.log("uspjeh");
-                window.location.href = "chat.html";
+                //if(data.uspjeh)
+                   //console.log("uspjeh");
+                window.location.href = "chat.html"; //-->preusmjeri me
 
             },
             error: function( xhr, status )
             {
-              if(status !== null) console.log("nije ok");
+              if(status !== null) 
+                console.log("nije ok");
             }
         });
 
@@ -111,10 +111,7 @@
 
         $("#chat").html(tbl);
 
-       /* var h2=$("<h2></h2>");
-        h2.html("Zahtjev za poruku:")
-        $("#chat").html(h2);*/
-
+        //Provjera onih koji su trazili spoji me,ali im "nije uzvraceno",i mozda su poslali poruku
         var tbl=$("<table></table>");
         for(var i=0; i < data.zahtjevi.length;++i){
             var flag=true;

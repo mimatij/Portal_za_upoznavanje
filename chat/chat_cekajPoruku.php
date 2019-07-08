@@ -39,7 +39,7 @@ $row = $rezultat->fetch_assoc();
 
 $timestamp=strtotime($row['maxLastModified']);
 
-if($timestamp > $zadnjiPristup)//dogodile su se izmjene pa dohvati sve
+if($timestamp > $zadnjiPristup) //Dogodile su se izmjene pa dohvati sve
 {
     //Dohvati sve poruke
     $rezultat = $mysqli->query("SELECT from_email,to_email,msg FROM Chat
@@ -58,6 +58,7 @@ if($timestamp > $zadnjiPristup)//dogodile su se izmjene pa dohvati sve
     
     sendJSONandExit( $message );
 }
+//Ako nema izmjena
 else {
     $message=[];
     $message['prazno']=true;
