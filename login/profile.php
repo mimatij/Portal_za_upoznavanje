@@ -148,8 +148,6 @@ if(isset($_POST['btn_uredi'])) header('location: interests.php');
                     if($max_zbroj > 0){
                         $upit = "INSERT INTO spojeni  VALUES ($id,$max_id)";
                         $rezultat = $mysqli->query($upit);
-                        $upit = "INSERT INTO spojeni  VALUES ($max_id,$id)";
-                        $rezultat = $mysqli->query($upit);
                         return $max_id;
                     }
                    return -1;
