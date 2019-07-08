@@ -93,8 +93,8 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
 
           <div class="container_left">
               <form class="" action="interests.php" method="post">
-                  <a>Ime:</a> <br><input type="text" name="ime" value="" placeholder="<?php if(isset($_SESSION['ime']) && $_SESSION['ime'] !== '') echo $_SESSION['ime']; ?>" required><br><br>
-                  <a>Prezime:</a> <br><input type="text" name="prezime" value="" placeholder="<?php echo $_SESSION['prezime']; ?>" required><br><br>
+                  <a>Ime:</a> <br><input type="text" name="ime" value="" required><br><br>
+                  <a>Prezime:</a> <br><input type="text" name="prezime" value="" required><br><br>
                   <a>Spol:</a><br>
                   <?php
                       if(isset($_SESSION['spol']) && $_SESSION['spol'] === "M")
@@ -103,7 +103,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
                         echo '<input type="radio" name="spol" value="Z">žensko';
                       }
-                      elseif ($_SESSION['spol'] === "Z")
+                      elseif (isset($_SESSION['spol']) && $_SESSION['spol'] === "Z")
                       {
                         echo '<input type="radio" name="spol" value="M">muško';
                         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -117,7 +117,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                       }
                   ?>
                   <br><br>
-                  <a>Grad:</a> <br><input type="text" name="grad" value="" placeholder="<?php echo $_SESSION['grad']; ?>"><br><br>
+                  <a>Grad:</a> <br><input type="text" name="grad" value=""><br><br>
                   <button type="submit" name="btn_osobni_podaci">Spremi promjene</button><br><br><br>
                   <a>Lociraj me:</a> <br><button id="btn_geolokacija">Gdje sam?</button><br><br>
               </form>
