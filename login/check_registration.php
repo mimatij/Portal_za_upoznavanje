@@ -33,7 +33,7 @@ else
     $lozinka = $_POST['password_1'];
     if(!preg_match('/^[0-9a-zA-Z_]{6,20}$/', $lozinka))
     {
-      $_SESSION['message'] = 'Lozinka nije okej: dozvoljena su velika, mala slova, brojevi i underscore. <br> Minimalno 5 znakova.';
+      $_SESSION['message'] = 'Lozinka nije okej: dozvoljena su velika, mala slova, brojevi i underscore. <br> Minimalno 6 znakova.';
       header("location: errors.php");
     }
     else
