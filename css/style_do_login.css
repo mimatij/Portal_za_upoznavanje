@@ -67,3 +67,10 @@ input[type=text], input[type=password]{
     border-radius: 5px;
     border: 1px solid rgb(32, 11, 66);
 }
+
+.povratak{
+    width: 5%;
+    height: auto;
+    margin-left: 12px;
+    margin-top: 9px;
+}

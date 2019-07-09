@@ -11,8 +11,8 @@ include_once( '../database/db.php');
         <meta charset="utf-8">
         <title>Upoznaj me! - registracija</title>
         <link rel="icon" type="image/png" href="icon.png">
-        <link rel="stylesheet" type="text/css" href="../css/style_errors.css?<?php echo time(); ?>" media="screen, projection">
         <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="../css/style_errors.css?<?php echo time(); ?>" media="screen, projection">
     </head>
     <body>
 

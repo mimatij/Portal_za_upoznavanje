@@ -5,11 +5,6 @@ include_once( '../database/db.php');
 if(!isset($_SESSION)) { 
   session_start(); 
 }
-// echo '<pre>';
-// //echo '$_SERVER = '; print_r($_SERVER);
-// echo '$_POST = '; print_r($_POST);
-// echo '$_SESSION = '; print_r($_SESSION);
-// echo '<pre>';
 ?>
 
 <!DOCTYPE html>
@@ -18,13 +13,13 @@ if(!isset($_SESSION)) {
     <meta charset="utf-8">
     <title>Upoznaj me!</title>
     <link rel="icon" type="image/png" href="icon.png">
+    <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="../css/style_index.css?<?php echo time(); ?>" media="screen, projection">
-    <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script>
+  // Promjena slika na početnoj stranici "index.php" svakih 5 sekundi
 $(document).ready(function(){
 var container = $('#left');
 
@@ -68,7 +63,6 @@ container.css('background-image', backgrounds[0]);
     </div>
 
     <?php
-      // echo 'dobar dan';
 
       if($_SERVER['REQUEST_METHOD'] === 'POST')
       {
@@ -81,26 +75,24 @@ container.css('background-image', backgrounds[0]);
       }
      ?>
       
-      
       <div class="dolje">
           <footer>
               <div class="footerContainer">
                 <div class="footerBox">
                     <div class="footerItem">
-                      <!-- <p style="font-size: 200%;" class="sredina">&#xf0e0;</p> -->
                       <p class="sredina"><a href="mailto:upoznajme@gmail.com"><i class="fa fa-envelope" style="font-size:42px;color:red"></i></a></p>
                       <p>upoznajme@gmail.com</p>
                     </div>
 
                     <div class="footerItem">
                     <p style="font-size: 200%">&#x1F4CD;</p>
-                    <p>Ljubavna Adresa 0, Zagreb</p>
+                    <p>Ljubavna Adresa 14/II, Grad Ljubavi</p>
                     </div>
 
                 </div>
               </div>
-        </footer>
-            <footer>  
+          </footer>
+          <footer>  
               <div class="footerSredina">
                 <a>Copyright © 2019 Luka Naglić, Mia Matijašević, Mia Tadić, Kristina Udovičić. All rights reserved.</a>
               </div>

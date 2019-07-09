@@ -39,11 +39,14 @@ if(isset($_POST['btn_ok_registration']))
       <meta charset="utf-8">
       <title>Upoznaj me! - registracija</title>
       <link rel="icon" type="image/png" href="icon.png">
+      <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
       <link rel="stylesheet" type="text/css" href="../css/style_do_registration.css?<?php echo time(); ?>" media="screen, projection">
       <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
   </head>
 
   <body>
+      <a href="index.php"><img src="https://www.shareicon.net/data/512x512/2015/10/30/664361_arrows_512x512.png" class="povratak" /></a>
+
       <div class="container">
           <p>Registriraj se!</p>
           <form action="do_registration.php" method="post">

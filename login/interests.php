@@ -5,8 +5,13 @@ if(!isset($_SESSION)) {
 include_once( '../database/db.php');
 
 $email = $_SESSION['email'];
-$sql = "SELECT id FROM Korisnik where email='$email'";
-$id = $mysqli->query($sql)->fetch_object()->id;
+$sql = "SELECT id, ime, prezime, grad, spol FROM Korisnik where email='$email'";
+$obj = $mysqli->query($sql)->fetch_object();
+$id = $obj->id;
+$ime =$obj->ime;
+$prezime = $obj->prezime;
+$grad = $obj->grad;
+$spol = $obj->spol;
 
 if(isset($_POST['btn_osobni_podaci']))
   include_once('check_personal_data.php');
@@ -21,15 +26,14 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
         <meta charset="utf-8">
         <title>Upoznaj me! - upitnik</title>
         <link rel="icon" type="image/png" href="icon.png">
-        <link rel="stylesheet" type="text/css" href="../css/style_interests.css?<?php echo time(); ?>" media="screen, projection">
         <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Berkshire+Swash' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="../css/style_interests.css?<?php echo time(); ?>" media="screen, projection">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-        <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css"> -->
-        <!-- <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script> -->
-        <!-- "http://fonts.googleapis.com/css?family=Josefin+Sans&subset=latin,latin-ext" -->
+        <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+        <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+   
     </head>
 
     <body>
@@ -50,12 +54,11 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
         <br>
 
         <?php
-            if($_SESSION['registriran'] === true /*&& !isset($_SESSION['ulogiran'])*/)
+            if($_SESSION['registriran'] === true)
             {
               echo '<p class="container_success">Registracija uspješna! '
                 . '<i class="fa fa-check" style="color:green; font-size:40px;"></i>'
                 . '<br>Unesite svoje osobne podatke i interese.</p>';
-              // echo 'Unesite svoje osobne podatke i interese.<br>';
             }
             elseif($_SESSION['ulogiran'] === true)
             {
@@ -65,6 +68,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
       
           <br>
           <?php
+            // funkcija koja provjerava u tablici $tablica je li $atribut zadan ili ne te ispisuje checked=checked ako je, inace nista
             function provjeri_zadanost($atribut, $tablica){
               global $mysqli;
               global $id;
@@ -73,7 +77,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                 echo " checked=checked";
               
             }
-
+            // isto kao i gornja samo za spol
             function provjeri_zadanost_spola($atribut){
               global $mysqli;
               global $id;
@@ -90,20 +94,22 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
 
           <a class="osobni_podaci">Osobni podaci:</a>
           <a class="moji_interesi">Moji interesi:</a><br>
-
+        
+         
+          <!-- Unos osnovnih podataka korisnika -->
           <div class="container_left">
               <form class="" action="interests.php" method="post">
-                  <a>Ime:</a> <br><input type="text" name="ime" value="" required><br><br>
-                  <a>Prezime:</a> <br><input type="text" name="prezime" value="" required><br><br>
+                  <a>Ime:</a> <br><input type="text" name="ime" value="" placeholder="<?php echo $ime ?>" required><br><br>
+                  <a>Prezime:</a> <br><input type="text" name="prezime" value="" placeholder="<?php echo $prezime ?>" required><br><br>
                   <a>Spol:</a><br>
                   <?php
-                      if(isset($_SESSION['spol']) && $_SESSION['spol'] === "M")
+                      if(isset($spol) && $spol === "M")
                       {
                         echo '<input type="radio" name="spol" value="M" checked="true">muško';
                         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
                         echo '<input type="radio" name="spol" value="Z">žensko';
                       }
-                      elseif (isset($_SESSION['spol']) && $_SESSION['spol'] === "Z")
+                      elseif (isset($spol) && $spol === "Z")
                       {
                         echo '<input type="radio" name="spol" value="M">muško';
                         echo '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -117,12 +123,23 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                       }
                   ?>
                   <br><br>
-                  <a>Grad:</a> <br><input type="text" name="grad" value=""><br><br>
+                  <a>Grad:</a> <br><input type="text" name="grad" value="" placeholder="<?php echo $grad ?>"><br><br>
                   <button type="submit" name="btn_osobni_podaci">Spremi promjene</button><br><br><br>
+
                   <a>Lociraj me:</a> <br><button id="btn_geolokacija">Gdje sam?</button><br><br>
               </form>
+                      <?php $_SESSION['id'] = $id; ?>
+            
+            <br>
+            
+            <form action="upload.php" method="post" enctype="multipart/form-data">
+                    <a>Odaberi profilnu sliku:</a><br>
+                    <input type="file" name="fileToUpload" id="fileToUpload" class="browse">
+                    <input type="submit" value="Spremi sliku" name="submit">
+            </form>
           </div>
 
+          <!-- Unos vlastitih interesa -->
           <div class="container_middle">
           <form action="interests.php" method="post">
 
@@ -173,7 +190,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                       <tr>
                           <td><input type="checkbox" name="osobine[]" value="Društvenost" <?php provjeri_zadanost('Društvenost', 'nudim_interese');?>><a>Društvenost</a></td>
                           <td><input type="checkbox" name="osobine[]" value="Hiperaktivnost" <?php provjeri_zadanost('Hiperaktivnost', 'nudim_interese');?>><a>Hiperaktivnost</a></td>
-                          <td><input type="checkbox" name="osobine[]" value="Inteligentnost" <?php provjeri_zadanost('Inteligentnost', 'nudim_interese');?>><a>Inteligentnost</a></td>
+                          <td><input type="checkbox" name="osobine[]" value="Inteligencija" <?php provjeri_zadanost('Inteligencija', 'nudim_interese');?>><a>Inteligencija</a></td>
                           <td><input type="checkbox" name="osobine[]" value="Iskrenost" <?php provjeri_zadanost('Iskrenost', 'nudim_interese');?>><a>Iskrenost</a>
                       </tr>
                       <tr>
@@ -196,7 +213,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
           </form>
           </div>
 
-
+          <!-- Unos partnerovih interesa koje tražimo -->
           <a class="partnerovi_interesi">Od partnera očekujem:</a><br>
 
           <div class="container_right">
@@ -256,7 +273,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                       <tr>
                           <td><input type="checkbox" name="osobine2[]" value="Društvenost" <?php provjeri_zadanost('Društvenost', 'trazim_interese');?>>Društvenost</td>
                           <td><input type="checkbox" name="osobine2[]" value="Hiperaktivnost" <?php provjeri_zadanost('Hiperaktivnost', 'trazim_interese');?>>Hiperaktivnost</td>
-                          <td><input type="checkbox" name="osobine2[]" value="Inteligentnost" <?php provjeri_zadanost('Inteligentnost', 'trazim_interese');?>>Inteligentnost</td>
+                          <td><input type="checkbox" name="osobine2[]" value="Inteligencija" <?php provjeri_zadanost('Inteligencija', 'trazim_interese');?>>Inteligencija</td>
                           <td><input type="checkbox" name="osobine2[]" value="Iskrenost" <?php provjeri_zadanost('Iskrenost', 'trazim_interese');?>>Iskrenost</td>
                       </tr>
                       <tr>
@@ -281,13 +298,13 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
 
 
           
-          <script>    
+          <script>
 $( document ).ready( function() 
 {
     $( "#btn_geolokacija" ).on( "click", locate );
 } );
 
-
+// Funkcija koja dohvaća geografsku širinu i dužinu korisnika i zatim ih šalje preko ajaxa skripti "geolocation.php" koja će ih spremiti u bazu
 function locate() 
 {
     navigator.geolocation.getCurrentPosition( function( pos ) 
