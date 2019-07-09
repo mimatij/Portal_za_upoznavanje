@@ -51,6 +51,17 @@ $email = $korisnik['email'];
 
         <p class="pozdrav">Ovo je profil tvog kompatibilnog partnera!</p>
 
+        <?php
+        // Dohvaćanje profilne slike iz baze iz tablice "foto" - fja base64_encode dekodira binarni zapis tipa LONGBLOB
+        $sql = "SELECT * FROM foto WHERE id=$id";
+        $result = $mysqli->query($sql);
+        $row = mysqli_fetch_array($result);
+        if($row) // ako je korisnik spremio sliku, nacrtaj ju
+            echo ' <img src="data:image/jpeg;base64,'.base64_encode($row['slika'] ).'" class="user_image" /> ';
+        else
+            echo ' <img src="https://3znvnpy5ek52a26m01me9p1t-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/noimage_person.png" class="user_image" /> ';
+        ?>  
+        
         <form class="" action="profile.php" method="post"> 
             <div class="user_info">
 

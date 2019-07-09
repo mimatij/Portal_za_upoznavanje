@@ -13,6 +13,16 @@ $prezime = $obj->prezime;
 $grad = $obj->grad;
 $spol = $obj->spol;
 
+//
+if( isset($_POST["insert"]) ){  
+    $file = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+    $sql = "DELETE FROM foto WHERE id=$id";
+    $result = $mysqli->query($sql);
+    $sql = "INSERT INTO foto(id, slika) VALUES ($id,'$file')";
+    $result = $mysqli->query($sql); 
+}  
+//
+
 if(isset($_POST['btn_osobni_podaci']))
   include_once('check_personal_data.php');
 
@@ -130,13 +140,15 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
               </form>
                       <?php $_SESSION['id'] = $id; ?>
             
-            <br>
-            
-            <form action="upload.php" method="post" enctype="multipart/form-data">
-                    <a>Odaberi profilnu sliku:</a><br>
-                    <input type="file" name="fileToUpload" id="fileToUpload" class="browse">
-                    <input type="submit" value="Spremi sliku" name="submit">
-            </form>
+                <br>
+           
+                <!-- Uploadanje slike -->
+                <a>Učitaj sliku (jpg, jpeg, gif, png):</a><br>
+                <form method="post" enctype="multipart/form-data">  
+                        <input type="file" name="image" id="image" /><br><br>
+                        <input type="submit" name="insert" id="insert" value="Spremi sliku" />  
+                </form>
+             
           </div>
 
           <!-- Unos vlastitih interesa -->
@@ -149,7 +161,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                   <input type="checkbox" name="odnos[]" value="Druženje" <?php provjeri_zadanost('Druženje', 'nudim_interese');?>><a>Druženje</a> &nbsp;&nbsp;&nbsp;&nbsp;
                   <input type="checkbox" name="odnos[]" value="Dopisivanje" <?php provjeri_zadanost('Dopisivanje', 'nudim_interese');?>><a>Dopisivanje</a>
               
-              <br><br><br>
+              <br><br><br><br>
               
               <a class="naglaseno">Moji hobiji:</a><br>
                   <table>
@@ -183,7 +195,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                       </tr>
                   </table>
 
-              <br><br>
+              <br><br><br>
 
               <a class="naglaseno">Moje osobine:</a><br>
                   <table>
@@ -207,7 +219,7 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
                       </tr>
                   </table>
               
-              <br><br>
+              <br><br><br>
 
               <button type="submit" name="btn_opis_korisnika">Spremi opis</button>
           </form>
@@ -302,6 +314,8 @@ if(isset($_POST['btn_opis_korisnika']) || isset($_POST['btn_sto_korisnik_trazi']
 $( document ).ready( function() 
 {
     $( "#btn_geolokacija" ).on( "click", locate );
+
+    $( "#insert" ).on( "click", photoCorrectness ); 
 } );
 
 // Funkcija koja dohvaća geografsku širinu i dužinu korisnika i zatim ih šalje preko ajaxa skripti "geolocation.php" koja će ih spremiti u bazu
@@ -330,7 +344,24 @@ function locate()
             }
         } );
     } );
-}    
+}
+
+function photoCorrectness(){ 
+    var ime_slike = $( "#image" ).val();  
+    if(ime_slike == ''){  
+        alert( "Odaberi sliku." );  
+        return false;  
+    }  
+    else{  
+        var tip_slike = $( "#image" ).val().split('.').pop().toLowerCase();  
+        if(jQuery.inArray(tip_slike, ['gif','png','jpg','jpeg']) === -1){  
+            alert( "Nedopušten tip slike." );  
+            $( "#image" ).val('');  
+            return false;  
+        }  
+    }  
+}
+
 </script>
 
 

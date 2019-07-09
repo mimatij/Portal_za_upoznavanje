@@ -1,9 +1,5 @@
 html, body{
-    /* background-color: #FF895A; */
-    /* background: -webkit-linear-gradient(to top left, #8A2387,#E94057,#F27121, white); */
-    /* background-image: linear-gradient(to top left, #8A2387,#E94057,#F27121, white); */
     background-image: linear-gradient(to right, #12c2e9,#c471ed,#f64f59);
-    /* background-image: linear-gradient(to right, #FC466B,#3F5EFB); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #4FD0FF;
@@ -75,8 +71,6 @@ html, body{
     box-shadow: -4px 4px 5px 9px rgba(0,0,0,0.5);
     
     display: inline-block;
-    /* width: 970px;
-    height: 540px; */
     width: 50%;
     height: 400px;
     float: left;
@@ -94,9 +88,7 @@ html, body{
     text-align: center;
     padding: 130px 0px;
     margin-top: 90px;
-
     display: inline-block;
-    /* float: left; */
 }
 
 .btn_register{

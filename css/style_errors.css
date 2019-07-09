@@ -1,11 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,800);
 
 html, body{
-    /* background-color: #FF895A; */
-    /* background: -webkit-linear-gradient(to top left, #8A2387,#E94057,#F27121, white); */
-    /* background-image: linear-gradient(to top left, #8A2387,#E94057,#F27121, white); */
     background-image: linear-gradient(to right, #12c2e9,#c471ed,#f64f59);
-    /* background-image: linear-gradient(to right, #FC466B,#3F5EFB); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     color: #4FD0FF;
