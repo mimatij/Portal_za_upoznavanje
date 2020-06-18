@@ -1,8 +1,7 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 Portal za upoznavanje
+(Mia Matijašević, Luka Naglić, Mia Tadić, Kristina Udovičić)
 Korisnik napravi profil, ispuni upitnik u kojem daje vlastite interese, 
 i osobine koje mu se sviđaju kod potencijalnog "poznanika". 
 Podaci se spremaju u bazu podataka te čim korisnik zatraži od 
