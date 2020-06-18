@@ -1,5 +1,5 @@
-<h2>Projektni zadatak kolegija Računarski praktikum 2:</h2>
-<h3>Portal za upoznavanje</h3>
+<h3>Projektni zadatak kolegija Računarski praktikum 2:</h3>
+<h2>Portal za upoznavanje</h2>
 <h4>(Mia Matijašević, Luka Naglić, Mia Tadić, Kristina Udovičić)</h4>
 
 Korisnik napravi profil, ispuni upitnik u kojem daje vlastite interese, 
